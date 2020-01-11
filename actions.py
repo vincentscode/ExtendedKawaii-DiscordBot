@@ -3,6 +3,7 @@ from helpers import print
 import requests
 import random
 import discord
+import os
 
 
 def get_gif(search_term, lmt=10, pos=None):
@@ -20,7 +21,9 @@ def get_gif(search_term, lmt=10, pos=None):
 
 
 def get_goat():
-    return 'https://media1.tenor.com/images/683e106d7ce8c54eea570bfc2c862096/tenor.gif'
+    goats = [g for g in os.listdir('assets/goats/')]
+    goat = random.choice(goats)
+    return goat  # 'https://media1.tenor.com/images/683e106d7ce8c54eea570bfc2c862096/tenor.gif'
 
 
 async def hi(channel, params, mentions, author):
@@ -65,9 +68,10 @@ async def sorry(channel, params, mentions, author):
 async def goat(channel, params, mentions, author):
     gif = get_goat()
 
+    file = discord.File("assets/goats/" + gif, filename=gif)
     embed = discord.Embed()
-    embed.set_image(url=gif)
-    await channel.send(embed=embed)
+    embed.set_image(url="attachment://" + gif)
+    await channel.send(file=file, embed=embed)
 
 
 async def source(channel, params, mentions, author):
