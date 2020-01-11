@@ -1,7 +1,9 @@
 from datetime import datetime
 import builtins
+import os
 
-log_file = open("log.txt", "w", encoding="utf8")
+dir_path = os.path.dirname(os.path.realpath(__file__))
+log_file = open(dir_path + "/log.txt", "w", encoding="utf8")
 
 
 # noinspection PyShadowingBuiltins

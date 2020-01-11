@@ -1,8 +1,11 @@
-from config import token, prefix
+from config import token, prefix, dev_mode
 from helpers import print
 import actions
 
 import discord
+
+if dev_mode:
+    import importlib
 
 client = discord.Client()
 
@@ -15,7 +18,7 @@ def parse(message: discord.Message):
     mentions = message.mentions
     author = message.author
 
-    return command, channel, params, mentions, author
+    return command.lower(), channel, params, mentions, author
 
 
 @client.event
@@ -32,7 +35,8 @@ async def on_message(message):
         return
 
     command, channel, params, mentions, author = parse(message)
-    # debug: importlib.reload(actions)
+    if dev_mode:
+        importlib.reload(actions)
     if command in actions.commands:
         print("Executing", command)
         await actions.commands[command](channel, params, mentions, author)
