@@ -65,6 +65,14 @@ async def yawn(channel: discord.TextChannel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def sleep(channel: discord.TextChannel, params, mentions, author):
+    gif = get_gif('sleep')
+
+    embed = discord.Embed()
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def mauw(channel, params, mentions, author):
     gif = get_gif('sad')
 
@@ -173,6 +181,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**Hi**', value="Hi! (✿◠‿◠)", inline=inline)
     embed.add_field(name='**Fluff / Flausch / Flauschel [Person]**', value="Jemanden flauscheln! ^-^", inline=inline)
     embed.add_field(name='**Yawn / Gähn**', value="Müdigkeit! D:", inline=inline)
+    embed.add_field(name='**Sleep**', value="Zu viel Müdigkeit! D:", inline=inline)
     embed.add_field(name='**Mauw**', value=":(", inline=inline)
     embed.add_field(name='**Sorry [Optional: Person]**', value="Sich entschuldigen", inline=inline)
     embed.add_field(name='**Goat**', value="Eine von {} süßen Ziegen! owo".format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')])), inline=inline)
@@ -195,6 +204,7 @@ commands = {
     'flauschel': fluff,
     'yawn': yawn,
     'gähn': yawn,
+    'sleep': sleep,
     'mauw': mauw,
     'sorry': sorry,
     'goat': goat,
