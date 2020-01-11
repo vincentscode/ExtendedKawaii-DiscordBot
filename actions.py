@@ -92,6 +92,11 @@ async def goat(channel, params, mentions, author):
     await channel.send(file=file, embed=embed)
 
 
+async def goatcount(channel, params, mentions, author):
+    msg = '{} süße Ziegen!!!'.format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')]))
+    await channel.send(msg)
+
+
 async def yes(channel, params, mentions, author):
     gif = get_gif('yes')
     embed = discord.Embed()
@@ -170,7 +175,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**Yawn / Gähn**', value="Müdigkeit! D:", inline=inline)
     embed.add_field(name='**Mauw**', value=":(", inline=inline)
     embed.add_field(name='**Sorry [Optional: Person]**', value="Sich entschuldigen", inline=inline)
-    embed.add_field(name='**Goat**', value="Süße Ziegen! owo", inline=inline)
+    embed.add_field(name='**Goat**', value="Eine von {} süßen Ziegen! owo".format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')])), inline=inline)
     embed.add_field(name='**Yes / Ja**', value="Jaaa!", inline=inline)
     embed.add_field(name='**No / Nope / Nein**', value="Neeee!", inline=inline)
     embed.add_field(name='**runaway**', value="Nichts wie weg! (˚▽˚’!)/", inline=inline)
@@ -193,6 +198,7 @@ commands = {
     'mauw': mauw,
     'sorry': sorry,
     'goat': goat,
+    'goatcount': goatcount,
     'yes': yes,
     'ja': yes,
     'no': no,
