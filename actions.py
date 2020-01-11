@@ -45,7 +45,7 @@ def get_goat():
 
 async def hi(channel, params, mentions, author):
     if len(mentions) != 0:
-        msg = 'Hi {}! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'.format(mentions[0])
+        msg = 'Hi {}! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'.format(mentions[0].mention)
     else:
         msg = 'Hi {}! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'.format(author.mention)
     await channel.send(msg)
