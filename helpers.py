@@ -3,7 +3,7 @@ import builtins
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-log_file = open(dir_path + "/log.txt", "w", encoding="utf8")
+log_file = open(dir_path + "/log_{}.txt".format(datetime.now().strftime('%H_%M_%S_%d_%m_%Y')), "w", encoding="utf8")
 
 
 # noinspection PyShadowingBuiltins
