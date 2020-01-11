@@ -2,7 +2,6 @@ from config import tenor_key, prefix
 from helpers import print
 import requests
 import random
-import math
 import discord
 import os
 
@@ -303,4 +302,5 @@ commands = {
     'invite': invite,
     'source': source,
     'help': list_commands,
+    'ping': ping,
 }
