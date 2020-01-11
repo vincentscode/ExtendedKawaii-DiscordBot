@@ -7,7 +7,7 @@ log_file = open(dir_path + "/log.txt", "w", encoding="utf8")
 
 
 # noinspection PyShadowingBuiltins
-def print(*args, log_level=0):
+def print(*args, log_level=0, end="\n"):
     if log_level == 0:
         log_prefix = "[INFO ] "
     elif log_level == 1:
@@ -19,6 +19,6 @@ def print(*args, log_level=0):
 
     print_string = "[" + datetime.now().strftime('%H:%M:%S.%f') + "] " + log_prefix + " ".join(map(str, args)).replace("\n", "")
 
-    builtins.print(print_string)
-    log_file.write(print_string + "\n")
+    builtins.print(print_string, end=end)
+    log_file.write(print_string + end)
     log_file.flush()

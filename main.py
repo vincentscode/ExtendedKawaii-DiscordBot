@@ -38,7 +38,7 @@ async def on_message(message):
     if dev_mode:
         importlib.reload(actions)
     if command in actions.commands:
-        print("Executing", command)
+        print("Executing", command, "({}#{}: \"{}\")".format(author.name, author.discriminator, message.content))
         await actions.commands[command](channel, params, mentions, author)
 
 
@@ -47,6 +47,6 @@ async def on_ready():
     print('Started')
     print('Name:', client.user.name)
     print('Id:', client.user.id)
-    print('Current guilds:', client.fetch_guilds())
+    print('Current guilds:', await client.fetch_guilds().get_guilds(25))
 
 client.run(token)

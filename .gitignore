@@ -304,3 +304,4 @@ dmypy.json
 *.txt
 log.txt
 /assets/
+/test.py

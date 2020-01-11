@@ -23,12 +23,14 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False):
 
     if r.status_code == 200:
         gifs = r.json()
-        print([itm["url"] for itm in gifs["results"]])
         options = [itm["media"][0]['gif']["url"] for itm in gifs["results"]]
         if last_gif in options:
+            print(len(options))
             options.remove(last_gif)
+            print("last_gif in options", len(options))
         sel = random.choice(options)
         last_gif = sel
+        print(sel, "<-", options)
         return sel
     else:
         return None
@@ -37,7 +39,8 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False):
 def get_goat():
     goats = [g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')]
     goat = random.choice(goats)
-    return goat  # 'https://media1.tenor.com/images/683e106d7ce8c54eea570bfc2c862096/tenor.gif'
+    print(goat, "<-", len(goats))
+    return goat
 
 
 async def hi(channel, params, mentions, author):
@@ -155,16 +158,48 @@ async def kiss(channel, params, mentions, author):
         await channel.send('Wen denn? o.O')
         return
 
+    # self check
     if mentions[0].mention == author.mention:
         msg = 'Haha!'
         await channel.send(msg)
         return
     else:
         msg = '{}, du wurdest von {} geküsst'.format(mentions[0].mention, author.mention)
+
+    # embed
+    embed = discord.Embed()
     gif = get_gif('kiss')
+    embed.description = msg
+
+    # link check
+    if mentions[0].name == "Link_iene" and mentions[0].discriminator == "8415":
+        print("is link")
+        if author.name == "Vincent" and author.discriminator == "0212":
+            print("is vincent")
+        else:
+            gif = get_gif('slap')
+            embed.description = "Nein."
+
+    # vincent check
+    if mentions[0].name == "Vincent" and mentions[0].discriminator == "0212":
+        print("is vincent")
+        if author.name == "Link_iene" and author.discriminator == "8415":
+            print("is link")
+        else:
+            gif = get_gif('slap')
+            embed.description = "Nein."
+
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def shutup(channel, params, mentions, author):
+    gif = get_gif('stfu')
 
     embed = discord.Embed()
-    embed.description = msg
+    if len(mentions) != 0:
+        msg = 'Shut up, {}!'.format(mentions[0].mention)
+        embed.description = msg
     embed.set_image(url=gif)
     await channel.send(embed=embed)
 
@@ -223,7 +258,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**runaway [Optional: Person]**', value="Nichts wie weg! (˚▽˚’!)/", inline=inline)
     embed.add_field(name='**aww**', value="Aww! (๑ºωº)", inline=False)
     embed.add_field(name='**giggle**', value="Hehe", inline=False)
-    embed.add_field(name='**kkiss [Person]**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
+    embed.add_field(name='**kkiss / küss [Person]**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
     embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
@@ -253,6 +288,9 @@ commands = {
     'aww': aww,
     'giggle': giggle,
     'kkiss': kiss,
+    'küss': kiss,
+    'shutup': shutup,
+    'stfu': shutup,
     'süß': kiss,
     'grr': grr,
     'hiss': grr,
