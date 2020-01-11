@@ -47,5 +47,6 @@ async def on_ready():
     print('Started')
     print('Name:', client.user.name)
     print('Id:', client.user.id)
+    print('Current guilds:', client.fetch_guilds())
 
 client.run(token)

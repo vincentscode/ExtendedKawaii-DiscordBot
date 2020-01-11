@@ -13,12 +13,13 @@ last_gif = None
 print("Reloading actions.py", log_level=1)
 
 
-def get_gif(search_term, lmt=10, pos=None):
+def get_gif(search_term, lmt=10, pos=None, wo_anime=False):
     global last_gif
     if pos is None:
-        pos = random.randint(0, 20)
-
-    r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % ('anime ' + search_term, tenor_key, lmt, pos))
+        pos = random.randint(0, 15)
+    if not wo_anime:
+        search_term = 'anime ' + search_term
+    r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % (search_term, tenor_key, lmt, pos))
 
     if r.status_code == 200:
         gifs = r.json()
@@ -96,6 +97,8 @@ async def goat(channel, params, mentions, author):
 
     file = discord.File(dir_path + "/assets/goats/" + gif, filename=gif)
     embed = discord.Embed()
+    if len(mentions) != 0:
+        embed.description = 'Eine Ziege für {}!'.format(mentions[0].mention)
     embed.set_image(url="attachment://" + gif)
     await channel.send(file=file, embed=embed)
 
@@ -126,6 +129,9 @@ async def no(channel, params, mentions, author):
 async def runaway(channel, params, mentions, author):
     gif = get_gif('runaway')
     embed = discord.Embed()
+    if len(mentions) != 0:
+        msg = '{} rennt vor {} weg'.format(author.mention, mentions[0].mention)
+        embed.description = msg
     embed.set_image(url=gif)
     await channel.send(embed=embed)
 
@@ -149,11 +155,38 @@ async def kiss(channel, params, mentions, author):
         await channel.send('Wen denn? o.O')
         return
 
-    msg = '{}, du wurdest von {} geküsst'.format(mentions[0].mention, author.mention)
+    if mentions[0].mention == author.mention:
+        msg = 'Haha!'
+        await channel.send(msg)
+        return
+    else:
+        msg = '{}, du wurdest von {} geküsst'.format(mentions[0].mention, author.mention)
     gif = get_gif('kiss')
 
     embed = discord.Embed()
     embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def grr(channel, params, mentions, author):
+    gif = get_gif('grr')
+
+    embed = discord.Embed()
+    if len(mentions) != 0:
+        msg = '{}, du wurdest von {} angegrrt'.format(mentions[0].mention, author.mention)
+        embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def mimimi(channel, params, mentions, author):
+    gif = get_gif('mimimi', wo_anime=True)
+
+    embed = discord.Embed()
+    if len(mentions) != 0:
+        msg = 'Mimimi, {}!'.format(mentions[0].mention)
+        embed.description = msg
     embed.set_image(url=gif)
     await channel.send(embed=embed)
 
@@ -184,13 +217,15 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**Sleep**', value="Zu viel Müdigkeit! D:", inline=inline)
     embed.add_field(name='**Mauw**', value=":(", inline=inline)
     embed.add_field(name='**Sorry [Optional: Person]**', value="Sich entschuldigen", inline=inline)
-    embed.add_field(name='**Goat**', value="Eine von {} süßen Ziegen! owo".format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')])), inline=inline)
-    embed.add_field(name='**Yes / Ja**', value="Jaaa!", inline=inline)
-    embed.add_field(name='**No / Nope / Nein**', value="Neeee!", inline=inline)
-    embed.add_field(name='**runaway**', value="Nichts wie weg! (˚▽˚’!)/", inline=inline)
+    embed.add_field(name='**Goat [Optional: Person]**', value="Eine von {} süßen Ziegen! owo".format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')])), inline=inline)
+    embed.add_field(name='**Yes / Ja [Optional: Person]**', value="Jaaa!", inline=inline)
+    embed.add_field(name='**No / Nope / Nein [Optional: Person]**', value="Neeee!", inline=inline)
+    embed.add_field(name='**runaway [Optional: Person]**', value="Nichts wie weg! (˚▽˚’!)/", inline=inline)
     embed.add_field(name='**aww**', value="Aww! (๑ºωº)", inline=False)
     embed.add_field(name='**giggle**', value="Hehe", inline=False)
-    embed.add_field(name='**kkiss**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
+    embed.add_field(name='**kkiss [Person]**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
+    embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
+    embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
     embed.add_field(name='**help**', value="Diese Hilfe.", inline=inline)
@@ -219,6 +254,9 @@ commands = {
     'giggle': giggle,
     'kkiss': kiss,
     'süß': kiss,
+    'grr': grr,
+    'hiss': grr,
+    'mimimi': mimimi,
     'invite': invite,
     'source': source,
     'help': list_commands,
