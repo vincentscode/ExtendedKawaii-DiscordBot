@@ -259,6 +259,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**aww**', value="Aww! (๑ºωº)", inline=False)
     embed.add_field(name='**giggle**', value="Hehe", inline=False)
     embed.add_field(name='**kkiss / küss [Person]**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
+    embed.add_field(name='**shutup / stfu [Optional: Person]**', value="RUHE! (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
