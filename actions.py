@@ -50,6 +50,12 @@ async def mauw(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def source(channel, params, mentions, author):
+    link = 'https://github.com/vincentscode/ExtendedKawaii-DiscordBot'
+    msg = 'Hinter diesem Link findest du meinen Quellcode (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧\n<{}>'.format(link)
+    await channel.send(msg)
+
+
 async def invite(channel, params, mentions, author):
     link = 'https://discordapp.com/oauth2/authorize?client_id=665549589394227220&response_type=code&scope=bot'
     msg = 'Benutze diesen Link um mich einzuluden (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧\n<{}>'.format(link)
@@ -63,6 +69,7 @@ async def list_commands(channel, params, mentions, author):
     msg += "  - yawn  \n"
     msg += "  - mauw  \n"
     msg += "  - invite  \n"
+    msg += "  - source  \n"
     msg += "  - help  \n"
     await channel.send(msg)
 
@@ -75,5 +82,6 @@ commands = {
     'yawn': yawn,
     'mauw': mauw,
     'invite': invite,
+    'source': source,
     'help': list_commands
 }
