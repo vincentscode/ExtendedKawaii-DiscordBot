@@ -19,6 +19,11 @@ def parse(message: discord.Message):
 
 
 @client.event
+async def on_guild_join(guild):
+    print("Joined guild", guild)
+
+
+@client.event
 async def on_message(message):
     if message.author == client.user:
         return
@@ -29,6 +34,7 @@ async def on_message(message):
     command, channel, params, mentions, author = parse(message)
     # debug: importlib.reload(actions)
     if command in actions.commands:
+        print("Executing", command)
         await actions.commands[command](channel, params, mentions, author)
 
 

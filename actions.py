@@ -19,6 +19,10 @@ def get_gif(search_term, lmt=10, pos=None):
         return None
 
 
+def get_goat():
+    return 'https://media1.tenor.com/images/683e106d7ce8c54eea570bfc2c862096/tenor.gif'
+
+
 async def hi(channel, params, mentions, author):
     msg = 'Hi {}! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'.format(author.mention)
     await channel.send(msg)
@@ -44,6 +48,22 @@ async def yawn(channel: discord.TextChannel, params, mentions, author):
 
 async def mauw(channel, params, mentions, author):
     gif = get_gif('sad')
+
+    embed = discord.Embed()
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def sorry(channel, params, mentions, author):
+    gif = get_gif('sorry')
+
+    embed = discord.Embed()
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def goat(channel, params, mentions, author):
+    gif = get_goat()
 
     embed = discord.Embed()
     embed.set_image(url=gif)
@@ -81,7 +101,9 @@ commands = {
     'flauschel': fluff,
     'yawn': yawn,
     'mauw': mauw,
+    'sorry': sorry,
+    'goat': goat,
     'invite': invite,
     'source': source,
-    'help': list_commands
+    'help': list_commands,
 }
