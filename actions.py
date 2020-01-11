@@ -2,6 +2,7 @@ from config import tenor_key, prefix
 from helpers import print
 import requests
 import random
+import math
 import discord
 import os
 
@@ -267,6 +268,9 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**help**', value="Diese Hilfe.", inline=inline)
     await channel.send(embed=embed)
 
+
+async def ping(channel, params, mentions, author):
+    await channel.send("Pong!")
 
 commands = {
     'hi': hi,
