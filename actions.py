@@ -19,6 +19,8 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False):
         pos = random.randint(0, 15)
     if not wo_anime:
         search_term = 'anime ' + search_term
+
+    print("get_gif params:", search_term, lmt, pos)
     r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % (search_term, tenor_key, lmt, pos))
 
     if r.status_code == 200:
@@ -90,6 +92,17 @@ async def mauw(channel, params, mentions, author):
 
 async def sorry(channel, params, mentions, author):
     gif = get_gif('sorry')
+
+    # self check
+    if len(mentions) != 0:
+        if mentions[0].mention == author.mention:
+            print("is self")
+            gif = get_gif('slap')
+            embed = discord.Embed()
+            embed.description = "Stop it, {}! D:".format(author.mention)
+            embed.set_image(url=gif)
+            await channel.send(embed=embed)
+            return
 
     embed = discord.Embed()
     if len(mentions) != 0:
@@ -229,6 +242,21 @@ async def mimimi(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def give_up(channel, params, mentions, author):
+    gif = get_gif('give up')
+
+    embed = discord.Embed()
+    msg = '{} gibt auf...'.format(author.mention)
+    if len(mentions) != 0:
+        msg = '{} gibt {} auf...'.format(author.mention, mentions[0].mention)
+        if author.mention == mentions[0].mention:
+            await channel.send("Nicht aufgeben! D:")
+            return
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def source(channel, params, mentions, author):
     link = 'https://github.com/vincentscode/ExtendedKawaii-DiscordBot'
     msg = 'Hinter diesem Link findest du meinen Quellcode (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧\n<{}>'.format(link)
@@ -265,6 +293,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**shutup / stfu [Optional: Person]**', value="RUHE! (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
+    embed.add_field(name='**giveup [Optional: Person]**', value="qwq", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
     embed.add_field(name='**help**', value="Diese Hilfe.", inline=inline)
@@ -302,6 +331,7 @@ commands = {
     'grr': grr,
     'hiss': grr,
     'mimimi': mimimi,
+    'giveup': give_up,
     'invite': invite,
     'source': source,
     'help': list_commands,
