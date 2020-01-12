@@ -257,6 +257,26 @@ async def give_up(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def need_coffee(channel, params, mentions, author):
+    gif = get_gif('need coffee', wo_anime=True)
+
+    embed = discord.Embed()
+    msg = '{} braucht Kaffee..! :coffee:'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def gif(channel, params, mentions, author):
+    gif = get_gif(' '.join(params))
+
+    embed = discord.Embed()
+    msg = author.mention + ' ' + ' '.join(params)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def source(channel, params, mentions, author):
     link = 'https://github.com/vincentscode/ExtendedKawaii-DiscordBot'
     msg = 'Hinter diesem Link findest du meinen Quellcode (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧\n<{}>'.format(link)
@@ -294,6 +314,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**giveup [Optional: Person]**', value="qwq", inline=inline)
+    embed.add_field(name='**needcoffee**', value="Kaffee..! o.o", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
     embed.add_field(name='**help**', value="Diese Hilfe.", inline=inline)
@@ -332,6 +353,8 @@ commands = {
     'hiss': grr,
     'mimimi': mimimi,
     'giveup': give_up,
+    'needcoffee': need_coffee,
+    'gif': gif,
     'invite': invite,
     'source': source,
     'help': list_commands,
