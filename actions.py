@@ -4,6 +4,7 @@ import requests
 import random
 import discord
 import os
+import asyncio
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -267,11 +268,58 @@ async def need_coffee(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def goatbomb(channel, params, mentions, author):
+    embed = discord.Embed()
+    gifs = []
+
+    num = 3
+    if len(params) > 0:
+        try:
+            num = int(params[0])
+        except Exception as e:
+            print("goatbomb ex:", e)
+            pass
+
+    print("goatbomb size:", num)
+    if num > 5:
+        num = 5
+        print("goatbomb size exceeded 5 ->", num)
+
+    while len(gifs) < num:
+        gifs.append(get_goat())
+        gifs = list(set(gifs))
+
+    msg: discord.Message = await channel.send('Goat-Bomb - Detoning in 3...')
+
+    await asyncio.sleep(0.4)
+    await msg.edit(content="Goat-Bomb - Detoning in 2...")
+    await asyncio.sleep(0.4)
+    await msg.edit(content="Goat-Bomb - Detoning in 1...")
+    await asyncio.sleep(0.4)
+    await msg.edit(content="Goat-Bomb - :boom:")
+
+    for gif in gifs:
+        file = discord.File(dir_path + "/assets/goats/" + gif, filename=gif)
+        embed = discord.Embed()
+        embed.set_image(url="attachment://" + gif)
+        await channel.send(file=file, embed=embed)
+
+
+async def shrug(channel, params, mentions, author):
+    gif = get_gif('shrug')
+
+    embed = discord.Embed()
+    msg = '{} zuckt mit den Schultern..'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def gif(channel, params, mentions, author):
     gif = get_gif(' '.join(params))
 
     embed = discord.Embed()
-    msg = author.mention + ' ' + ' '.join(params)
+    msg = author.mention + ': ' + ' '.join(params)
     embed.description = msg
     embed.set_image(url=gif)
     await channel.send(embed=embed)
@@ -354,6 +402,8 @@ commands = {
     'mimimi': mimimi,
     'giveup': give_up,
     'needcoffee': need_coffee,
+    'goatbomb': goatbomb,
+    'shrug': shrug,
     'gif': gif,
     'invite': invite,
     'source': source,
