@@ -49,4 +49,6 @@ async def on_ready():
     print('Id:', client.user.id)
     print('Current guilds:', await client.fetch_guilds().get_guilds(25))
 
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='+help'))
+
 client.run(token)
