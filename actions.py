@@ -10,21 +10,25 @@ import asyncio
 dir_path = os.path.dirname(os.path.realpath(__file__))
 last_gif = None
 platforms = ["tenor", "giphy"]
+platforms_with_local = ["tenor", "giphy"]  # "local", "local", "local"
 
 
 print("Reloading actions.py", log_level=1)
 
 
-def get_gif(search_term, lmt=50, pos=None, wo_anime=False, platform=None):
+def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
     global last_gif
 
     if platform is None:
-        platform = random.choice(platforms)
+        if search_term in os.listdir("cache/"):
+            platform = random.choice(platforms_with_local)
+        else:
+            platform = random.choice(platforms)
 
     if platform == "tenor":
         print("using tenor")
         if pos is None:
-            pos = random.randint(0, 15)
+            pos = random.randint(0, 100)
         if not wo_anime:
             search_term = 'anime ' + search_term
 
@@ -47,7 +51,7 @@ def get_gif(search_term, lmt=50, pos=None, wo_anime=False, platform=None):
     elif platform == "giphy":
         print("using giphy")
         if pos is None:
-            pos = random.randint(0, 2)
+            pos = random.randint(0, 4)
         if not wo_anime:
             search_term = 'anime ' + search_term
 
@@ -65,6 +69,20 @@ def get_gif(search_term, lmt=50, pos=None, wo_anime=False, platform=None):
             last_gif = sel
             print(sel, "<-", options)
             return sel
+    elif platform == "local":
+        print("using local")
+        print("get_gif params:", search_term)
+
+        options = os.listdir(f"cache/{search_term}/tenor")
+
+        if last_gif in options:
+            print(len(options))
+            options.remove(last_gif)
+            print("last_gif in options", len(options))
+        sel = random.choice(options)
+        last_gif = sel
+        print(dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
+        return dir_path + f"/cache/{search_term}/tenor/" + sel
 
 
 def get_goat():
@@ -213,8 +231,9 @@ async def kiss(channel, params, mentions, author):
 
     # embed
     embed = discord.Embed()
-    gif = get_gif('kiss')
     embed.description = msg
+
+    gif = get_gif('kiss')
 
     # link check
     if mentions[0].name == "Link_iene" and mentions[0].discriminator == "8415":
@@ -234,8 +253,18 @@ async def kiss(channel, params, mentions, author):
             gif = get_gif('slap')
             embed.description = "Nein."
 
-    embed.set_image(url=gif)
-    await channel.send(embed=embed)
+    print("Gif:", gif, os.path.exists(gif))
+    if os.path.exists(gif):
+        # TODO: Fix
+        msg = '{}, du wurdest von {} geküsst'.format(mentions[0].mention, author.mention)
+        embed = discord.Embed()
+        embed.description = msg
+        file = discord.File(gif, filename="s.gif")
+        embed.set_image(url="attachment://s.gif")
+        await channel.send(file=file, embed=embed)
+    else:
+        embed.set_image(url=gif)
+        await channel.send(embed=embed)
 
 
 async def shutup(channel, params, mentions, author):

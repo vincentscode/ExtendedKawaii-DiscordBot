@@ -303,3 +303,5 @@ dmypy.json
 /.idea/
 /assets/
 /logs/
+/cache/
+gen_cache.py
