@@ -21,7 +21,7 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
     global last_gif
 
     if platform is None:
-        if search_term in os.listdir("cache/"):
+        if os.path.exists("cache/") and search_term in os.listdir("cache/"):
             platform = random.choice(platforms_with_local)
         else:
             platform = random.choice(platforms)
