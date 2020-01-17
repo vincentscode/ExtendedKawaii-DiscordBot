@@ -47,7 +47,7 @@ def get_gif(search_term, lmt=50, pos=None, wo_anime=False, platform=None):
     elif platform == "giphy":
         print("using giphy")
         if pos is None:
-            pos = random.randint(0, 15)
+            pos = random.randint(0, 2)
         if not wo_anime:
             search_term = 'anime ' + search_term
 
