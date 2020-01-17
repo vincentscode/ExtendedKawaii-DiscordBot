@@ -1,4 +1,4 @@
-from config import tenor_key, prefix
+from config import tenor_key, giphy_key, prefix
 from helpers import print
 import requests
 import random
@@ -9,34 +9,62 @@ import asyncio
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 last_gif = None
+platforms = ["tenor", "giphy"]
 
 
 print("Reloading actions.py", log_level=1)
 
 
-def get_gif(search_term, lmt=10, pos=None, wo_anime=False):
+def get_gif(search_term, lmt=50, pos=None, wo_anime=False, platform=None):
     global last_gif
-    if pos is None:
-        pos = random.randint(0, 15)
-    if not wo_anime:
-        search_term = 'anime ' + search_term
 
-    print("get_gif params:", search_term, lmt, pos)
-    r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % (search_term, tenor_key, lmt, pos))
+    if platform is None:
+        platform = random.choice(platforms)
 
-    if r.status_code == 200:
-        gifs = r.json()
-        options = [itm["media"][0]['gif']["url"] for itm in gifs["results"]]
-        if last_gif in options:
-            print(len(options))
-            options.remove(last_gif)
-            print("last_gif in options", len(options))
-        sel = random.choice(options)
-        last_gif = sel
-        print(sel, "<-", options)
-        return sel
-    else:
-        return None
+    if platform == "tenor":
+        print("using tenor")
+        if pos is None:
+            pos = random.randint(0, 15)
+        if not wo_anime:
+            search_term = 'anime ' + search_term
+
+        print("get_gif params:", search_term, lmt, pos)
+        r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % (search_term, tenor_key, lmt, pos))
+
+        if r.status_code == 200:
+            gifs = r.json()
+            options = [itm["media"][0]['gif']["url"] for itm in gifs["results"]]
+            if last_gif in options:
+                print(len(options))
+                options.remove(last_gif)
+                print("last_gif in options", len(options))
+            sel = random.choice(options)
+            last_gif = sel
+            print(sel, "<-", options)
+            return sel
+        else:
+            return None
+    elif platform == "giphy":
+        print("using giphy")
+        if pos is None:
+            pos = random.randint(0, 15)
+        if not wo_anime:
+            search_term = 'anime ' + search_term
+
+        print("get_gif params:", search_term, lmt, pos)
+        r = requests.get("https://api.giphy.com/v1/gifs/search?api_key=%s&q=%s&limit=%s&offset=%s&rating=PG-13" % (giphy_key, search_term, lmt, pos))
+
+        if r.status_code == 200:
+            gifs = r.json()
+            options = [itm["images"]["original"]["url"] for itm in gifs["data"]]
+            if last_gif in options:
+                print(len(options))
+                options.remove(last_gif)
+                print("last_gif in options", len(options))
+            sel = random.choice(options)
+            last_gif = sel
+            print(sel, "<-", options)
+            return sel
 
 
 def get_goat():
@@ -68,7 +96,7 @@ async def fluff(channel, params, mentions, author):
 
 
 async def yawn(channel: discord.TextChannel, params, mentions, author):
-    gif = get_gif('yawn')
+    gif = get_gif('yawn', platform="tenor")
 
     embed = discord.Embed()
     embed.set_image(url=gif)
