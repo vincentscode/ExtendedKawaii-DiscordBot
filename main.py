@@ -47,7 +47,7 @@ async def on_ready():
     print('Started')
     print('Name:', client.user.name)
     print('Id:', client.user.id)
-    print('Current guilds:', await client.fetch_guilds().get_guilds(25))
+    print('Current guilds:', [x["name"] for x in await client.fetch_guilds().get_guilds(25)])
 
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='+help'))
 

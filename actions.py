@@ -315,6 +315,56 @@ async def shrug(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def uff(channel, params, mentions, author):
+    gif = get_gif('uff', wo_anime=True)
+
+    embed = discord.Embed()
+    msg = '{} ufft..'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def eww(channel, params, mentions, author):
+    gif = get_gif('eww')
+
+    embed = discord.Embed()
+    msg = 'BAH!'
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def owo(channel, params, mentions, author):
+    gif = get_gif('owo')
+
+    embed = discord.Embed()
+    msg = 'owo'
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def need_food(channel, params, mentions, author):
+    gif = get_gif('need food', wo_anime=True)
+
+    embed = discord.Embed()
+    msg = '{} braucht essen!'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def shiver(channel, params, mentions, author):
+    gif = get_gif('shiver')
+
+    embed = discord.Embed()
+    msg = '{} zittert.'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def gif(channel, params, mentions, author):
     gif = get_gif(' '.join(params))
 
@@ -346,23 +396,28 @@ async def list_commands(channel, params, mentions, author):
     embed.title = "Liste der Befehle"
     embed.description = 'Prefix: ``' + prefix + '``'
     embed.add_field(name='**Hi**', value="Hi! (✿◠‿◠)", inline=inline)
-    embed.add_field(name='**Fluff / Flausch / Flauschel [Person]**', value="Jemanden flauscheln! ^-^", inline=inline)
+    embed.add_field(name='**Fluff / Flausch / Flauschel / Wuschel [Person]**', value="Jemanden flauscheln! ^-^", inline=inline)
     embed.add_field(name='**Yawn / Gähn**', value="Müdigkeit! D:", inline=inline)
-    embed.add_field(name='**Sleep**', value="Zu viel Müdigkeit! D:", inline=inline)
+    embed.add_field(name='**Sleep / fallasleep**', value="Zu viel Müdigkeit! D:", inline=inline)
     embed.add_field(name='**Mauw**', value=":(", inline=inline)
     embed.add_field(name='**Sorry [Optional: Person]**', value="Sich entschuldigen", inline=inline)
     embed.add_field(name='**Goat [Optional: Person]**', value="Eine von {} süßen Ziegen! owo".format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')])), inline=inline)
     embed.add_field(name='**Yes / Ja [Optional: Person]**', value="Jaaa!", inline=inline)
     embed.add_field(name='**No / Nope / Nein [Optional: Person]**', value="Neeee!", inline=inline)
     embed.add_field(name='**runaway [Optional: Person]**', value="Nichts wie weg! (˚▽˚’!)/", inline=inline)
-    embed.add_field(name='**aww**', value="Aww! (๑ºωº)", inline=False)
-    embed.add_field(name='**giggle**', value="Hehe", inline=False)
+    embed.add_field(name='**aww**', value="Aww! (๑ºωº)", inline=inline)
+    embed.add_field(name='**uff**', value="Uff! D:", inline=inline)
+    embed.add_field(name='**bah / eww**', value="Eww! :eyes:", inline=inline)
+    embed.add_field(name='**owo**', value="OWO", inline=inline)
+    embed.add_field(name='**giggle**', value="Hehe", inline=inline)
     embed.add_field(name='**kkiss / küss [Person]**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
     embed.add_field(name='**shutup / stfu [Optional: Person]**', value="RUHE! (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**giveup [Optional: Person]**', value="qwq", inline=inline)
     embed.add_field(name='**needcoffee**', value="Kaffee..! o.o", inline=inline)
+    embed.add_field(name='**needfood**', value="Essen.. :o", inline=inline)
+    embed.add_field(name='**shiver**', value="Kalt! D:", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
     embed.add_field(name='**help**', value="Diese Hilfe.", inline=inline)
@@ -372,14 +427,21 @@ async def list_commands(channel, params, mentions, author):
 async def ping(channel, params, mentions, author):
     await channel.send("Pong!")
 
+
+async def settings(channel, params, mentions, author):  # TODO
+    await channel.send("Coming soon")
+
 commands = {
+    # commands
     'hi': hi,
     'fluff': fluff,
     'flausch': fluff,
     'flauschel': fluff,
+    'wuschel': fluff,
     'yawn': yawn,
     'gähn': yawn,
     'sleep': sleep,
+    'fallasleep': sleep,
     'mauw': mauw,
     'sorry': sorry,
     'goat': goat,
@@ -404,9 +466,20 @@ commands = {
     'needcoffee': need_coffee,
     'goatbomb': goatbomb,
     'shrug': shrug,
+    'uff': uff,
+    'bah': eww,
+    'eww': eww,
+    'owo': owo,
+    'needfood': need_food,
+    'shiver': shiver,
+
+    # custom gif
     'gif': gif,
+
+    # management
     'invite': invite,
     'source': source,
     'help': list_commands,
     'ping': ping,
+    'settings': settings,
 }
