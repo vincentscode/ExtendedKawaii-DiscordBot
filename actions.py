@@ -17,6 +17,7 @@ print("Reloading actions.py", log_level=1)
 
 
 def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
+    print("get_gif")
     global last_gif
 
     if platform is None:
@@ -233,6 +234,7 @@ async def kiss(channel, params, mentions, author):
     embed = discord.Embed()
     embed.description = msg
 
+    print("kiss", msg)
     gif = get_gif('kiss')
 
     # link check
@@ -253,18 +255,18 @@ async def kiss(channel, params, mentions, author):
             gif = get_gif('slap')
             embed.description = "Nein."
 
-    print("Gif:", gif, os.path.exists(gif))
-    if os.path.exists(gif):
-        # TODO: Fix
-        msg = '{}, du wurdest von {} geküsst'.format(mentions[0].mention, author.mention)
-        embed = discord.Embed()
-        embed.description = msg
-        file = discord.File(gif, filename="s.gif")
-        embed.set_image(url="attachment://s.gif")
-        await channel.send(file=file, embed=embed)
-    else:
-        embed.set_image(url=gif)
-        await channel.send(embed=embed)
+    # print("Gif:", gif, os.path.exists(gif))
+    # if os.path.exists(gif):
+    #     # TODO: Fix
+    #     msg = '{}, du wurdest von {} geküsst'.format(mentions[0].mention, author.mention)
+    #     embed = discord.Embed()
+    #     embed.description = msg
+    #     file = discord.File(gif, filename="s.gif")
+    #     embed.set_image(url="attachment://s.gif")
+    #     await channel.send(file=file, embed=embed)
+    # else:
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
 
 
 async def shutup(channel, params, mentions, author):
