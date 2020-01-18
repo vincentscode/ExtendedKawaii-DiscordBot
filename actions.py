@@ -9,7 +9,7 @@ import asyncio
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 last_gif = None
-platforms = ["tenor", "giphy"]
+platforms = ["tenor", "tenor", "tenor", "giphy"]
 platforms_with_local = ["tenor", "giphy"]  # "local", "local", "local"
 
 
@@ -424,6 +424,21 @@ async def shiver(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
+async def feed(channel, params, mentions, author):
+    gif = get_gif('feed', lmt=20, pos=0)
+
+    if len(mentions) == 0:
+        await channel.send('Wen denn? o.O')
+        return
+
+    msg = '{}, du bekommst Essen von {}! 🍔🍟🍕'.format(mentions[0].mention, author.mention)
+
+    embed = discord.Embed()
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def gif(channel, params, mentions, author):
     gif = get_gif(' '.join(params))
 
@@ -531,6 +546,8 @@ commands = {
     'owo': owo,
     'needfood': need_food,
     'shiver': shiver,
+    'givefood': feed,
+    'feed': feed,
 
     # custom gif
     'gif': gif,
