@@ -301,7 +301,10 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/python,pycharm,pycharm+iml,pycharm+all
 /.idea/
+
 /assets/
 /logs/
 /cache/
+
 gen_cache.py
+test.py

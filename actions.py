@@ -431,7 +431,7 @@ async def feed(channel, params, mentions, author):
         await channel.send('Wen denn? o.O')
         return
 
-    msg = '{}, du bekommst Essen von {}! 🍔🍟🍕'.format(mentions[0].mention, author.mention)
+    msg = '{}, du bekommst Essen von {}! {}'.format(mentions[0].mention, author.mention, ''.join(random.choices([c for c in '🍔🍟🍕🌭🍿🥞🍳🧈🍞🥐🥨🥯🥖🧀🥪🌮🥗🥙🍖🍗🥩🥟🥠🥡🍘🍙🍚'], k=2)))
 
     embed = discord.Embed()
     embed.description = msg
