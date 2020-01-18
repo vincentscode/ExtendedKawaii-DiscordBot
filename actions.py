@@ -425,7 +425,7 @@ async def shiver(channel, params, mentions, author):
 
 
 async def feed(channel, params, mentions, author):
-    gif = get_gif('feed', lmt=20, pos=0)
+    gif = get_gif('feed', lmt=15, pos=0)
 
     if len(mentions) == 0:
         await channel.send('Wen denn? o.O')
