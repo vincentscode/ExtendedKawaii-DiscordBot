@@ -408,7 +408,7 @@ async def need_food(channel, params, mentions, author):
     gif = get_gif('need food', wo_anime=True)
 
     embed = discord.Embed()
-    msg = '{} braucht essen!'.format(author.mention)
+    msg = '{} braucht Essen!'.format(author.mention)
     embed.description = msg
     embed.set_image(url=gif)
     await channel.send(embed=embed)
@@ -434,6 +434,30 @@ async def feed(channel, params, mentions, author):
     msg = '{}, du bekommst Essen von {}! {}'.format(mentions[0].mention, author.mention, ''.join(random.choices([c for c in '🍔🍟🍕🌭🍿🥞🍳🧈🍞🥐🥨🥯🥖🧀🥪🌮🥗🥙🍖🍗🥩🥟🥠🥡🍘🍙🍚'], k=2)))
 
     embed = discord.Embed()
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def cat(channel, params, mentions, author):
+    gif = get_gif(random.choice(['cat', 'meow']), platform="tenor")
+
+    if len(mentions) == 0:
+        msg = '{} miaut'.format(author.mention)
+    else:
+        msg = '{} miaut {} an'.format(author.mention, mentions[0].mention)
+
+    embed = discord.Embed()
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
+async def need_sleep(channel, params, mentions, author):
+    gif = get_gif('need sleep', platform="tenor", wo_anime=True)
+
+    embed = discord.Embed()
+    msg = '{} braucht Schlaf..!'.format(author.mention)
     embed.description = msg
     embed.set_image(url=gif)
     await channel.send(embed=embed)
@@ -491,10 +515,12 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**giveup [Optional: Person]**', value="qwq", inline=inline)
     embed.add_field(name='**needcoffee**', value="Kaffee..! o.o", inline=inline)
     embed.add_field(name='**needfood**', value="Essen.. :o", inline=inline)
+    embed.add_field(name='**needsleep**', value="Schlaf..! D:", inline=inline)
+    embed.add_field(name='**meow / cat**', value="=(^_^)=", inline=inline)
     embed.add_field(name='**shiver**', value="Kalt! D:", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
-    embed.add_field(name='**help**', value="Diese Hilfe.", inline=inline)
+    embed.add_field(name='**help / commands**', value="Diese Hilfe.", inline=inline)
     await channel.send(embed=embed)
 
 
@@ -548,6 +574,9 @@ commands = {
     'shiver': shiver,
     'givefood': feed,
     'feed': feed,
+    'needsleep': need_sleep,
+    'meow': cat,
+    'cat': cat,
 
     # custom gif
     'gif': gif,
@@ -556,6 +585,7 @@ commands = {
     'invite': invite,
     'source': source,
     'help': list_commands,
+    'commands': list_commands,
     'ping': ping,
     'settings': settings,
 }
