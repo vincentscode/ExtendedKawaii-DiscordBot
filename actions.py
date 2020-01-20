@@ -520,7 +520,7 @@ async def list_commands(channel, params, mentions, author):
     embed.add_field(name='**shiver**', value="Kalt! D:", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
-    embed.add_field(name='**help / commands**', value="Diese Hilfe.", inline=inline)
+    embed.add_field(name='**help / readme / commands**', value="Diese Hilfe.", inline=inline)
     await channel.send(embed=embed)
 
 
@@ -586,6 +586,7 @@ commands = {
     'source': source,
     'help': list_commands,
     'commands': list_commands,
+    'readme': list_commands,
     'ping': ping,
     'settings': settings,
 }
