@@ -281,6 +281,15 @@ async def shutup(channel, params, mentions, author, original_message):
     await channel.send(embed=embed)
 
 
+async def shutup_radio(channel, params, mentions, author, original_message):
+    embed = discord.Embed()
+    if len(mentions) != 0:
+        msg = 'Shut up, {}!'.format(mentions[0].mention)
+        embed.description = msg
+    embed.set_image(url="https://media.tenor.com/images/a3cefe5da142e9ad28dac7d219630696/tenor.gif")
+    await channel.send(embed=embed)
+
+
 async def grr(channel, params, mentions, author, original_message):
     gif = get_gif('grr')
 
@@ -559,6 +568,7 @@ commands = {
     'küss': kiss,
     'shutup': shutup,
     'stfu': shutup,
+    'stfur': shutup_radio,
     'süß': kiss,
     'grr': grr,
     'hiss': grr,
