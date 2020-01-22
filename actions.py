@@ -513,7 +513,7 @@ async def list_commands(channel, params, mentions, author, original_message):
     embed = discord.Embed()
     embed.title = "Liste der Befehle"
     embed.description = 'Prefix: ``' + prefix + '``'
-    embed.add_field(name='**Hi**', value="Hi! (✿◠‿◠)", inline=inline)
+    embed.add_field(name='**Hi [Optional: Person]**', value="Hi! (✿◠‿◠)", inline=inline)
     embed.add_field(name='**Fluff / Flausch / Flauschel / Wuschel [Person]**', value="Jemanden flauscheln! ^-^", inline=inline)
     embed.add_field(name='**Yawn / Gähn**', value="Müdigkeit! D:", inline=inline)
     embed.add_field(name='**Sleep / fallasleep**', value="Zu viel Müdigkeit! D:", inline=inline)
@@ -537,7 +537,7 @@ async def list_commands(channel, params, mentions, author, original_message):
     embed.add_field(name='**needfood**', value="Essen.. :o", inline=inline)
     embed.add_field(name='**needsleep**', value="Schlaf..! D:", inline=inline)
     embed.add_field(name='**needcuddles**', value="Kuscheln..! 	(｡•́︿•̀｡)", inline=inline)
-    embed.add_field(name='**meow / cat**', value="=(^_^)=", inline=inline)
+    embed.add_field(name='**miau / meow [Optional: Person]**', value="=(^_^)=", inline=inline)
     embed.add_field(name='**shiver**', value="Kalt! D:", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
     embed.add_field(name='**source**', value="Das bin ich! :eyes:", inline=inline)
@@ -599,7 +599,7 @@ commands = {
     'feed': feed,
     'needsleep': need_sleep,
     'meow': cat,
-    'cat': cat,
+    'miau': cat,
 
     # custom gif
     'gif': gif,
