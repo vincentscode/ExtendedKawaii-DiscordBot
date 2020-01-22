@@ -12,6 +12,7 @@ last_gif = None
 platforms = ["tenor", "tenor", "tenor", "giphy"]
 platforms_with_local = ["tenor", "giphy"]  # "local", "local", "local"
 
+platforms = platforms_with_local = ["tenor"]
 
 print("Reloading actions.py", log_level=1)
 
@@ -93,7 +94,7 @@ def get_goat():
     return goat
 
 
-async def hi(channel, params, mentions, author):
+async def hi(channel, params, mentions, author, original_message):
     if len(mentions) != 0:
         msg = 'Hi {}! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'.format(mentions[0].mention)
     else:
@@ -101,7 +102,7 @@ async def hi(channel, params, mentions, author):
     await channel.send(msg)
 
 
-async def fluff(channel, params, mentions, author):
+async def fluff(channel, params, mentions, author, original_message):
     if len(mentions) == 0:
         await channel.send('Wen denn? o.O')
         return
@@ -130,7 +131,7 @@ async def sleep(channel: discord.TextChannel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def mauw(channel, params, mentions, author):
+async def mauw(channel, params, mentions, author, original_message):
     gif = get_gif('sad')
 
     embed = discord.Embed()
@@ -138,7 +139,7 @@ async def mauw(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def sorry(channel, params, mentions, author):
+async def sorry(channel, params, mentions, author, original_message):
     gif = get_gif('sorry')
 
     # self check
@@ -159,7 +160,7 @@ async def sorry(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def goat(channel, params, mentions, author):
+async def goat(channel, params, mentions, author, original_message):
     gif = get_goat()
 
     file = discord.File(dir_path + "/assets/goats/" + gif, filename=gif)
@@ -170,12 +171,12 @@ async def goat(channel, params, mentions, author):
     await channel.send(file=file, embed=embed)
 
 
-async def goatcount(channel, params, mentions, author):
+async def goatcount(channel, params, mentions, author, original_message):
     msg = '{} süße Ziegen!!!'.format(len([g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')]))
     await channel.send(msg)
 
 
-async def yes(channel, params, mentions, author):
+async def yes(channel, params, mentions, author, original_message):
     gif = get_gif('yes')
     embed = discord.Embed()
     if len(mentions) != 0:
@@ -184,7 +185,7 @@ async def yes(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def no(channel, params, mentions, author):
+async def no(channel, params, mentions, author, original_message):
     gif = get_gif('no')
     embed = discord.Embed()
     if len(mentions) != 0:
@@ -193,7 +194,7 @@ async def no(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def runaway(channel, params, mentions, author):
+async def runaway(channel, params, mentions, author, original_message):
     gif = get_gif('runaway')
     embed = discord.Embed()
     if len(mentions) != 0:
@@ -203,21 +204,21 @@ async def runaway(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def aww(channel, params, mentions, author):
+async def aww(channel, params, mentions, author, original_message):
     gif = get_gif('aww')
     embed = discord.Embed()
     embed.set_image(url=gif)
     await channel.send(embed=embed)
 
 
-async def giggle(channel, params, mentions, author):
+async def giggle(channel, params, mentions, author, original_message):
     gif = get_gif('giggle')
     embed = discord.Embed()
     embed.set_image(url=gif)
     await channel.send(embed=embed)
 
 
-async def kiss(channel, params, mentions, author):
+async def kiss(channel, params, mentions, author, original_message):
     if len(mentions) == 0:
         await channel.send('Wen denn? o.O')
         return
@@ -269,7 +270,7 @@ async def kiss(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def shutup(channel, params, mentions, author):
+async def shutup(channel, params, mentions, author, original_message):
     gif = get_gif('stfu')
 
     embed = discord.Embed()
@@ -280,7 +281,7 @@ async def shutup(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def grr(channel, params, mentions, author):
+async def grr(channel, params, mentions, author, original_message):
     gif = get_gif('grr')
 
     embed = discord.Embed()
@@ -291,7 +292,7 @@ async def grr(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def mimimi(channel, params, mentions, author):
+async def mimimi(channel, params, mentions, author, original_message):
     gif = get_gif('mimimi', wo_anime=True)
 
     embed = discord.Embed()
@@ -302,7 +303,7 @@ async def mimimi(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def give_up(channel, params, mentions, author):
+async def give_up(channel, params, mentions, author, original_message):
     gif = get_gif('give up')
 
     embed = discord.Embed()
@@ -317,7 +318,7 @@ async def give_up(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def need_coffee(channel, params, mentions, author):
+async def need_coffee(channel, params, mentions, author, original_message):
     gif = get_gif('need coffee', wo_anime=True)
 
     embed = discord.Embed()
@@ -327,7 +328,7 @@ async def need_coffee(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def goatbomb(channel, params, mentions, author):
+async def goatbomb(channel, params, mentions, author, original_message):
     embed = discord.Embed()
     gifs = []
 
@@ -364,7 +365,7 @@ async def goatbomb(channel, params, mentions, author):
         await channel.send(file=file, embed=embed)
 
 
-async def shrug(channel, params, mentions, author):
+async def shrug(channel, params, mentions, author, original_message):
     gif = get_gif('shrug')
 
     embed = discord.Embed()
@@ -374,7 +375,7 @@ async def shrug(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def uff(channel, params, mentions, author):
+async def uff(channel, params, mentions, author, original_message):
     gif = get_gif('uff', wo_anime=True)
 
     embed = discord.Embed()
@@ -384,7 +385,7 @@ async def uff(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def eww(channel, params, mentions, author):
+async def eww(channel, params, mentions, author, original_message):
     gif = get_gif('eww')
 
     embed = discord.Embed()
@@ -394,7 +395,7 @@ async def eww(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def owo(channel, params, mentions, author):
+async def owo(channel, params, mentions, author, original_message):
     gif = get_gif('owo')
 
     embed = discord.Embed()
@@ -404,7 +405,7 @@ async def owo(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def need_food(channel, params, mentions, author):
+async def need_food(channel, params, mentions, author, original_message):
     gif = get_gif('need food', wo_anime=True)
 
     embed = discord.Embed()
@@ -414,7 +415,7 @@ async def need_food(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def shiver(channel, params, mentions, author):
+async def shiver(channel, params, mentions, author, original_message):
     gif = get_gif('shiver')
 
     embed = discord.Embed()
@@ -424,7 +425,7 @@ async def shiver(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def feed(channel, params, mentions, author):
+async def feed(channel, params, mentions, author, original_message):
     gif = get_gif('feed', lmt=15, pos=0)
 
     if len(mentions) == 0:
@@ -439,7 +440,7 @@ async def feed(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def cat(channel, params, mentions, author):
+async def cat(channel, params, mentions, author, original_message):
     gif = get_gif(random.choice(['cat', 'meow']), platform="tenor")
 
     if len(mentions) == 0:
@@ -453,7 +454,7 @@ async def cat(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def need_sleep(channel, params, mentions, author):
+async def need_sleep(channel, params, mentions, author, original_message):
     gif = get_gif('need sleep', platform="tenor", wo_anime=True)
 
     embed = discord.Embed()
@@ -463,7 +464,7 @@ async def need_sleep(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def gif(channel, params, mentions, author):
+async def gif(channel, params, mentions, author, original_message):
     gif = get_gif(' '.join(params))
 
     embed = discord.Embed()
@@ -473,19 +474,19 @@ async def gif(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def source(channel, params, mentions, author):
+async def source(channel, params, mentions, author, original_message):
     link = 'https://github.com/vincentscode/ExtendedKawaii-DiscordBot'
     msg = 'Hinter diesem Link findest du meinen Quellcode (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧\n<{}>'.format(link)
     await channel.send(msg)
 
 
-async def invite(channel, params, mentions, author):
+async def invite(channel, params, mentions, author, original_message):
     link = 'https://discordapp.com/oauth2/authorize?client_id=665549589394227220&response_type=code&scope=bot'
     msg = 'Benutze diesen Link um mich einzuluden (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧\n<{}>'.format(link)
     await channel.send(msg)
 
 
-async def list_commands(channel, params, mentions, author):
+async def list_commands(channel, params, mentions, author, original_message):
     inline = True
     if len(params) != 0:
         if params[0] == '1':
@@ -524,11 +525,11 @@ async def list_commands(channel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def ping(channel, params, mentions, author):
+async def ping(channel, params, mentions, author, original_message):
     await channel.send("Pong!")
 
 
-async def settings(channel, params, mentions, author):  # TODO
+async def settings(channel, params, mentions, author, original_message):  # TODO
     await channel.send("Coming soon")
 
 commands = {

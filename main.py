@@ -39,7 +39,7 @@ async def on_message(message):
         importlib.reload(actions)
     if command in actions.commands:
         print("Executing", command, "({}#{}: \"{}\")".format(author.name, author.discriminator, message.content))
-        await actions.commands[command](channel, params, mentions, author)
+        await actions.commands[command](channel, params, mentions, author, message)
 
 
 @client.event
