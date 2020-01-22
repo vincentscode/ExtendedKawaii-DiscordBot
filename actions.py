@@ -337,6 +337,16 @@ async def need_coffee(channel, params, mentions, author, original_message):
     await channel.send(embed=embed)
 
 
+async def need_cuddles(channel, params, mentions, author, original_message):
+    gif = get_gif('need cuddle', wo_anime=True, lmt=30, pos=0)
+
+    embed = discord.Embed()
+    msg = '{} will kuscheln! (｡•́︿•̀｡)'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def goatbomb(channel, params, mentions, author, original_message):
     embed = discord.Embed()
     gifs = []
@@ -519,13 +529,14 @@ async def list_commands(channel, params, mentions, author, original_message):
     embed.add_field(name='**owo**', value="OWO", inline=inline)
     embed.add_field(name='**giggle**', value="Hehe", inline=inline)
     embed.add_field(name='**kkiss / küss [Person]**', value="Ein Kuss! (ɔˆ ³ˆ⋆)♥(◦’ںˉ◦)", inline=inline)
-    embed.add_field(name='**shutup / stfu [Optional: Person]**', value="RUHE! (╯°□°)︻╦╤─ - - -", inline=inline)
+    embed.add_field(name='**shutup / stfu (special: stfur) [Optional: Person]**', value="RUHE! (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**grr / hiss [Optional: Person]**', value="Grrrr (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**mimimi [Optional: Person]**', value="MIMIMI (╯°□°)︻╦╤─ - - -", inline=inline)
     embed.add_field(name='**giveup [Optional: Person]**', value="qwq", inline=inline)
     embed.add_field(name='**needcoffee**', value="Kaffee..! o.o", inline=inline)
     embed.add_field(name='**needfood**', value="Essen.. :o", inline=inline)
     embed.add_field(name='**needsleep**', value="Schlaf..! D:", inline=inline)
+    embed.add_field(name='**needcuddles**', value="Kuscheln..! 	(｡•́︿•̀｡)", inline=inline)
     embed.add_field(name='**meow / cat**', value="=(^_^)=", inline=inline)
     embed.add_field(name='**shiver**', value="Kalt! D:", inline=inline)
     embed.add_field(name='**invite**', value="Lad' mich ein! ʕ•́ﻌ•̀ʔ", inline=inline)
@@ -575,6 +586,7 @@ commands = {
     'mimimi': mimimi,
     'giveup': give_up,
     'needcoffee': need_coffee,
+    'needcuddles': need_cuddles,
     'goatbomb': goatbomb,
     'shrug': shrug,
     'uff': uff,
