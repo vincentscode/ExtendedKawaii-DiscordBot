@@ -337,6 +337,20 @@ async def need_coffee(channel, params, mentions, author, original_message):
     await channel.send(embed=embed)
 
 
+async def need_sleep_or_coffee(channel, params, mentions, author, original_message):
+    await random.choice([need_coffee, need_sleep])(channel, params, mentions, author, original_message)
+
+
+async def need_shower(channel, params, mentions, author, original_message):
+    gif = get_gif('need shower', wo_anime=True, lmt=15, pos=0)
+
+    embed = discord.Embed()
+    msg = '{} braucht eine Dusche..! :sweat_drops:'.format(author.mention)
+    embed.description = msg
+    embed.set_image(url=gif)
+    await channel.send(embed=embed)
+
+
 async def need_cuddles(channel, params, mentions, author, original_message):
     gif = get_gif('need cuddle', wo_anime=True, lmt=30, pos=0)
 
@@ -586,6 +600,8 @@ commands = {
     'mimimi': mimimi,
     'giveup': give_up,
     'needcoffee': need_coffee,
+    'needsleeporcoffee': need_sleep_or_coffee,
+    'needshower': need_shower,
     'needcuddles': need_cuddles,
     'goatbomb': goatbomb,
     'shrug': shrug,
