@@ -115,7 +115,7 @@ async def fluff(channel, params, mentions, author, original_message):
     await channel.send(embed=embed)
 
 
-async def yawn(channel: discord.TextChannel, params, mentions, author):
+async def yawn(channel, params, mentions, author, original_message):
     gif = get_gif('yawn', platform="tenor")
 
     embed = discord.Embed()
@@ -123,7 +123,7 @@ async def yawn(channel: discord.TextChannel, params, mentions, author):
     await channel.send(embed=embed)
 
 
-async def sleep(channel: discord.TextChannel, params, mentions, author):
+async def sleep(channel, params, mentions, author, original_message):
     gif = get_gif('sleep')
 
     embed = discord.Embed()
