@@ -1,6 +1,15 @@
+import random
 from datetime import datetime
 import builtins
 import os
+
+import requests
+
+from config import tenor_key, giphy_key
+
+last_gif = None
+platforms = platforms_with_local = ["tenor"]
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(dir_path + '/logs'):
@@ -24,3 +33,80 @@ def print(*args, log_level=0, end="\n"):
     builtins.print(print_string, end=end)
     log_file.write(print_string + end)
     log_file.flush()
+
+
+def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
+    print("get_gif")
+    global last_gif
+
+    if platform is None:
+        if os.path.exists("cache/") and search_term in os.listdir("cache/"):
+            platform = random.choice(platforms_with_local)
+        else:
+            platform = random.choice(platforms)
+
+    if platform == "tenor":
+        print("using tenor")
+        if pos is None:
+            pos = random.randint(0, 100)
+        if not wo_anime:
+            search_term = 'anime ' + search_term
+
+        print("get_gif params:", search_term, lmt, pos)
+        r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % (search_term, tenor_key, lmt, pos))
+
+        if r.status_code == 200:
+            gifs = r.json()
+            options = [itm["media"][0]['gif']["url"] for itm in gifs["results"]]
+            if last_gif in options:
+                print(len(options))
+                options.remove(last_gif)
+                print("last_gif in options", len(options))
+            sel = random.choice(options)
+            last_gif = sel
+            print(sel, "<-", options)
+            return sel
+        else:
+            return None
+    elif platform == "giphy":
+        print("using giphy")
+        if pos is None:
+            pos = random.randint(0, 4)
+        if not wo_anime:
+            search_term = 'anime ' + search_term
+
+        print("get_gif params:", search_term, lmt, pos)
+        r = requests.get("https://api.giphy.com/v1/gifs/search?api_key=%s&q=%s&limit=%s&offset=%s&rating=PG-13" % (giphy_key, search_term, lmt, pos))
+
+        if r.status_code == 200:
+            gifs = r.json()
+            options = [itm["images"]["original"]["url"] for itm in gifs["data"]]
+            if last_gif in options:
+                print(len(options))
+                options.remove(last_gif)
+                print("last_gif in options", len(options))
+            sel = random.choice(options)
+            last_gif = sel
+            print(sel, "<-", options)
+            return sel
+    elif platform == "local":
+        print("using local")
+        print("get_gif params:", search_term)
+
+        options = os.listdir(f"cache/{search_term}/tenor")
+
+        if last_gif in options:
+            print(len(options))
+            options.remove(last_gif)
+            print("last_gif in options", len(options))
+        sel = random.choice(options)
+        last_gif = sel
+        print(dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
+        return dir_path + f"/cache/{search_term}/tenor/" + sel
+
+
+def get_goat():
+    goats = [g for g in os.listdir(dir_path + '/assets/goats/') if not g.endswith('.mp4') and not g.endswith('.db')]
+    goat = random.choice(goats)
+    print(goat, "<-", len(goats))
+    return goat

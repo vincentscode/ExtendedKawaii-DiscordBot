@@ -306,5 +306,5 @@ dmypy.json
 /logs/
 /cache/
 
-gen_cache.py
+test_downloader.py
 test.py

@@ -1,6 +1,7 @@
 from config import token, prefix, dev_mode
 from helpers import print
 import actions
+import actions.readme
 
 import discord
 
@@ -37,9 +38,29 @@ async def on_message(message):
     command, channel, params, mentions, author = parse(message)
     if dev_mode:
         importlib.reload(actions)
-    if command in actions.commands:
+    if command in actions.command_actions.keys():
         print("Executing", command, "({}#{}: \"{}\")".format(author.name, author.discriminator, message.content))
-        await actions.commands[command](channel, params, mentions, author, message)
+
+        if command in actions.readme.commands:
+            print("Sending readme")
+            inline = True
+            if len(params) != 0:
+                if params[0] == '1':
+                    inline = False
+
+            embed = discord.Embed()
+            embed.title = "Liste der Befehle"
+            embed.description = 'Prefix: ``' + prefix + '``'
+            for action in actions.actions:
+                cmd_append = ""
+                if action.requires_mention:
+                    cmd_append = " [Person]"
+                elif action.accepts_mention:
+                    cmd_append = " [Optional: Person]"
+                embed.add_field(name='**' + ' / '.join(action.commands) + cmd_append + '**', value=action.description, inline=inline)
+            await channel.send(embed=embed)
+        else:
+            await actions.command_actions[command].execute(message)
 
 
 @client.event
@@ -47,7 +68,7 @@ async def on_ready():
     print('Started')
     print('Name:', client.user.name)
     print('Id:', client.user.id)
-    print('Current guilds:', [x["name"] for x in await client.fetch_guilds().get_guilds(25)])
+    print('Current guilds (max 25):', [x["name"] for x in await client.fetch_guilds().get_guilds(25)])
 
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='+help'))
 
