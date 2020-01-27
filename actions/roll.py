@@ -1,5 +1,5 @@
 import discord
-from helpers import get_gif
+from helpers import get_gif, print
 
 commands = ["purzel", "rollt", "rolling", "rollen"]
 requires_mention = False
@@ -8,7 +8,11 @@ description = "Rumrollen owo"
 
 
 async def execute(message):
-    gif = get_gif('roll', wo_anime=True, lmt=25, pos=0)
+    params = ('roll', 25, 0, True)
+    gif = get_gif(*params)
+    while gif == "https://media.tenor.com/images/16b7245d1fa155fb3c20bcaaf022213c/tenor.gif":
+        print("skipping role gif")
+        gif = get_gif(*params)
 
     embed = discord.Embed()
 

@@ -2,6 +2,7 @@ from config import token, prefix, dev_mode
 from helpers import print
 import actions
 import actions.readme
+import actions.settings
 
 import discord
 
@@ -59,6 +60,18 @@ async def on_message(message):
                     cmd_append = " [Optional: Person]"
                 embed.add_field(name='**' + ' / '.join(action.commands) + cmd_append + '**', value=action.description, inline=inline)
             await channel.send(embed=embed)
+        elif command in actions.settings.commands:
+            print("Sending settings:", params)
+            if len(params) > 0:
+                pass
+            else:
+                embed = discord.Embed()
+                embed.title = "Mögliche Einstellungen"
+                embed.description = 'Prefix: ' + prefix + 'settings [Einstellung]'
+                for setting_name in actions.settings.settings:
+                    embed.add_field(name='**' + ' / '.join(setting_name) + '**', value=actions.settings.settings[setting_name])
+                await channel.send(embed=embed)
+
         else:
             await actions.command_actions[command].execute(message)
 
