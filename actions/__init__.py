@@ -1,9 +1,10 @@
+from colorama import Fore
 import os
 import importlib.util
 from helpers import print
 
 
-print("reloading actions")
+print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Reloading actions")
 
 actions = []
 command_actions = {}

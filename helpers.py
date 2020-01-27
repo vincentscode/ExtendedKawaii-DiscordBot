@@ -2,7 +2,7 @@ import random
 from datetime import datetime
 import builtins
 import os
-
+from colorama import Fore
 import requests
 
 from config import tenor_key, giphy_key
@@ -20,15 +20,16 @@ log_file = open(dir_path + "/logs/log_{}.txt".format(datetime.now().strftime('%H
 # noinspection PyShadowingBuiltins
 def print(*args, log_level=0, end="\n"):
     if log_level == 0:
-        log_prefix = "[INFO ] "
+        log_prefix = f"{Fore.LIGHTGREEN_EX}INFO {Fore.RESET}"
     elif log_level == 1:
-        log_prefix = "[WARN ] "
+        log_prefix = f"{Fore.YELLOW}WARN {Fore.RESET}"
     elif log_level == 2:
-        log_prefix = "[ERROR] "
+        log_prefix = f"{Fore.RED}ERROR {Fore.RESET}"
     else:
-        log_prefix = "[     ] "
+        log_prefix = "     "
 
-    print_string = "[" + datetime.now().strftime('%H:%M:%S.%f') + "] " + log_prefix + " ".join(map(str, args)).replace("\n", "")
+    log_prefix = "[" + log_prefix + "] "
+    print_string = f"[{Fore.WHITE}" + datetime.now().strftime('%H:%M:%S.%f') + f"{Fore.RESET}] " + log_prefix + " ".join(map(str, args)).replace("\n", "")
 
     builtins.print(print_string, end=end)
     log_file.write(print_string + end)

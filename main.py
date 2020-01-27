@@ -1,9 +1,9 @@
+from colorama import Fore
 from config import token, prefix, dev_mode
 from helpers import print
 import actions
 import actions.readme
 import actions.settings
-
 import discord
 
 if dev_mode:
@@ -29,7 +29,7 @@ async def on_guild_join(guild):
 
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.Message):
     if message.author == client.user:
         return
 
@@ -40,7 +40,7 @@ async def on_message(message):
     if dev_mode:
         importlib.reload(actions)
     if command in actions.command_actions.keys():
-        print("Executing", command, "({}#{}: \"{}\")".format(author.name, author.discriminator, message.content))
+        print(f"[{Fore.BLUE}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\")")
 
         if command in actions.readme.commands:
             print("Sending readme")
@@ -78,10 +78,10 @@ async def on_message(message):
 
 @client.event
 async def on_ready():
-    print('Started')
-    print('Name:', client.user.name)
-    print('Id:', client.user.id)
-    print('Current guilds (max 25):', [x["name"] for x in await client.fetch_guilds().get_guilds(25)])
+    print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Started")
+    print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Name:", client.user.name)
+    print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Id:", client.user.id)
+    print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Current guilds (max 25):", [x["name"] for x in await client.fetch_guilds().get_guilds(25)])
 
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='+help'))
 
