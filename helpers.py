@@ -37,8 +37,8 @@ def print(*args, log_level=0, end="\n"):
 
 
 def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
-    print("get_gif")
     global last_gif
+    print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Get")
 
     if platform is None:
         if os.path.exists("cache/") and search_term in os.listdir("cache/"):
@@ -47,13 +47,12 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
             platform = random.choice(platforms)
 
     if platform == "tenor":
-        print("using tenor")
         if pos is None:
             pos = random.randint(0, 100)
         if not wo_anime:
             search_term = 'anime ' + search_term
 
-        print("get_gif params:", search_term, lmt, pos)
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Tenor |", search_term, lmt, pos)
         r = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s&contentfilter=medium&pos=%s" % (search_term, tenor_key, lmt, pos))
 
         if r.status_code == 200:
@@ -70,13 +69,12 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
         else:
             return None
     elif platform == "giphy":
-        print("using giphy")
         if pos is None:
             pos = random.randint(0, 4)
         if not wo_anime:
             search_term = 'anime ' + search_term
 
-        print("get_gif params:", search_term, lmt, pos)
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Giphy |", search_term, lmt, pos)
         r = requests.get("https://api.giphy.com/v1/gifs/search?api_key=%s&q=%s&limit=%s&offset=%s&rating=PG-13" % (giphy_key, search_term, lmt, pos))
 
         if r.status_code == 200:
@@ -91,8 +89,7 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
             print(sel, "<-", options)
             return sel
     elif platform == "local":
-        print("using local")
-        print("get_gif params:", search_term)
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Local |", search_term)
 
         options = os.listdir(f"cache/{search_term}/tenor")
 
