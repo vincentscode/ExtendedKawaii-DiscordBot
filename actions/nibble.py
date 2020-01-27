@@ -2,10 +2,10 @@ import discord
 import random
 from helpers import get_gif
 
-commands = ["nibble"]
+commands = ["nibble", "knabber", "anknabber"]
 requires_mention = True
 accepts_mention = True
-description = "nibble"
+description = "Jemanden anknabbern :eyes:"
 
 
 async def execute(message):
