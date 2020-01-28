@@ -44,7 +44,7 @@ async def on_message(message: discord.Message):
         print(f"[{Fore.BLUE}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\")")
 
         if command in actions.readme.commands:
-            print("Sending readme", len(actions.actions))
+            print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Sending readme ({len(actions.actions)} actions)")
             inline = True
             if len(params) != 0:
                 if params[0] == '1':

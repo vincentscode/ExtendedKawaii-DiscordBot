@@ -59,12 +59,11 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
             gifs = r.json()
             options = [itm["media"][0]['gif']["url"] for itm in gifs["results"]]
             if last_gif in options:
-                print(len(options))
                 options.remove(last_gif)
-                print("last_gif in options", len(options))
+                print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in options", len(options))
             sel = random.choice(options)
             last_gif = sel
-            print(sel, "<-", options)
+            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel, "<-", options)
             return sel
         else:
             return None
@@ -81,12 +80,11 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
             gifs = r.json()
             options = [itm["images"]["original"]["url"] for itm in gifs["data"]]
             if last_gif in options:
-                print(len(options))
                 options.remove(last_gif)
-                print("last_gif in options", len(options))
+                print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in options", len(options))
             sel = random.choice(options)
             last_gif = sel
-            print(sel, "<-", options)
+            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel, "<-", options)
             return sel
     elif platform == "local":
         print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Local |", search_term)
@@ -96,10 +94,10 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
         if last_gif in options:
             print(len(options))
             options.remove(last_gif)
-            print("last_gif in options", len(options))
+            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in options", len(options))
         sel = random.choice(options)
         last_gif = sel
-        print(dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
         return dir_path + f"/cache/{search_term}/tenor/" + sel
 
 
