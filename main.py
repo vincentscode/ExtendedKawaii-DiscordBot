@@ -41,7 +41,7 @@ async def on_message(message: discord.Message):
     if dev_mode:
         importlib.reload(actions)
     if command in actions.command_actions.keys():
-        print(f"[{Fore.BLUE}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\")")
+        print(f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\")")
 
         if command in actions.readme.commands:
             print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Sending readme ({len(actions.actions)} actions)")
