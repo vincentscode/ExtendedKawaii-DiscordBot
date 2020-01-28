@@ -5,6 +5,7 @@ import actions
 import actions.readme
 import actions.settings
 import discord
+import math
 
 if dev_mode:
     import importlib
@@ -43,15 +44,17 @@ async def on_message(message: discord.Message):
         print(f"[{Fore.BLUE}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\")")
 
         if command in actions.readme.commands:
-            print("Sending readme")
+            print("Sending readme", len(actions.actions))
             inline = True
             if len(params) != 0:
                 if params[0] == '1':
                     inline = False
 
             embed = discord.Embed()
-            embed.title = "Liste der Befehle"
-            embed.description = 'Prefix: ``' + prefix + '``'
+            embed.title = f"Liste der Befehle 1/{math.ceil(len(actions.actions) / 24)}"
+            embed.description = 'Prefix: ' + prefix
+            itr = 0
+            page_itr = 1
             for action in actions.actions:
                 cmd_append = ""
                 if action.requires_mention:
@@ -59,7 +62,16 @@ async def on_message(message: discord.Message):
                 elif action.accepts_mention:
                     cmd_append = " [Optional: Person]"
                 embed.add_field(name='**' + ' / '.join(action.commands) + cmd_append + '**', value=action.description, inline=inline)
-            await channel.send(embed=embed)
+                itr += 1
+                if itr == 24:
+                    page_itr += 1
+                    await channel.send(embed=embed)
+                    embed = discord.Embed()
+                    embed.title = f"Liste der Befehle {page_itr}/{math.ceil(len(actions.actions) / 24)}"
+                    embed.description = 'Prefix: ' + prefix
+            if len(embed.fields) != 0:
+                await channel.send(embed=embed)
+
         elif command in actions.settings.commands:
             print("Sending settings:", params)
             if len(params) > 0:
