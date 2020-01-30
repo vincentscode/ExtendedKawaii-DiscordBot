@@ -85,6 +85,16 @@ async def on_message(message: discord.Message):
                 await channel.send(embed=embed)
 
         else:
+            class ChannelWrapper:
+                def __init__(self, original):
+                    self.original = original
+
+                async def send(self, content=None, *, tts=False, embed: discord.Embed=None, file=None, files=None, delete_after=None, nonce=None):
+                    if embed is not None:
+                        embed.colour = discord.Colour.from_rgb(156, 52, 137)
+                    await self.original.send(content=content, tts=tts, embed=embed, file=file, files=files, delete_after=delete_after, nonce=nonce)
+
+            message.channel = ChannelWrapper(message.channel)
             await actions.command_actions[command].execute(message)
 
 

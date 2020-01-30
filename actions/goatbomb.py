@@ -16,12 +16,12 @@ async def execute(message):
         gifs.append(get_goat())
         gifs = list(set(gifs))
 
-    msg: discord.Message = await message.channel.send('Goat-Bomb - Detoning in 3...')
+    msg: discord.Message = await message.channel.send('Goat-Bomb - Detonating in 3...')
 
     await asyncio.sleep(0.4)
-    await msg.edit(content="Goat-Bomb - Detoning in 2...")
+    await msg.edit(content="Goat-Bomb - Detonating in 2...")
     await asyncio.sleep(0.4)
-    await msg.edit(content="Goat-Bomb - Detoning in 1...")
+    await msg.edit(content="Goat-Bomb - Detonating in 1...")
     await asyncio.sleep(0.4)
     await msg.edit(content="Goat-Bomb - :boom:")
 
