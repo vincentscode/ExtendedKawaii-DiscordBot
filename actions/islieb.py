@@ -4,7 +4,7 @@
 commands = ["islieb"]
 requires_mention = False
 accepts_mention = False
-description = "is lieb"
+description = "Coming soon™"
 
 
 async def execute(message):

@@ -1,7 +1,7 @@
 commands = ["settings"]
 requires_mention = False
 accepts_mention = False
-description = "settings"
+description = "Coming soon™"
 
 settings = {
     'age_rating': [

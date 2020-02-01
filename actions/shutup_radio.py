@@ -1,11 +1,10 @@
 import discord
 import shelve
-from helpers import get_gif
 
 commands = ["stfur"]
 requires_mention = False
 accepts_mention = True
-description = "shutup_radio"
+description = "RADIO-POWER!"
 
 
 async def execute(message):

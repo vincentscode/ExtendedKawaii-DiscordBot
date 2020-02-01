@@ -1,10 +1,9 @@
-import discord
 import shelve
 
 commands = ["stfurc"]
 requires_mention = False
 accepts_mention = False
-description = "stfurc"
+description = "Wie viele Radios braucht es um die Entschuldigungen zu Stoppen?!"
 
 
 async def execute(message):
@@ -15,5 +14,4 @@ async def execute(message):
         shv['lena_counter'] = 1
         ctr = 1
     shv.close()
-    print(ctr)
     await message.channel.send('Lena wurde schon zum {} Mal mit einem Radio zum schweigen gebracht.'.format(ctr))

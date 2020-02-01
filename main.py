@@ -77,12 +77,13 @@ async def on_message(message: discord.Message):
             if len(params) > 0:
                 pass
             else:
-                embed = discord.Embed()
-                embed.title = "Mögliche Einstellungen"
-                embed.description = 'Prefix: ' + prefix + 'settings [Einstellung]'
-                for setting_name in actions.settings.settings:
-                    embed.add_field(name='**' + ' / '.join(setting_name) + '**', value=actions.settings.settings[setting_name])
-                await channel.send(embed=embed)
+                await channel.send("Coming soon™")
+                # embed = discord.Embed()
+                # embed.title = "Mögliche Einstellungen"
+                # embed.description = 'Prefix: ' + prefix + 'settings [Einstellung]'
+                # for setting_name in actions.settings.settings:
+                #     embed.add_field(name='**' + ' / '.join(setting_name) + '**', value=actions.settings.settings[setting_name])
+                # await channel.send(embed=embed)
 
         else:
             class ChannelWrapper:
