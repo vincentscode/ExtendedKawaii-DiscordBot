@@ -308,3 +308,4 @@ dmypy.json
 
 test_downloader.py
 test.py
+*.config.*
