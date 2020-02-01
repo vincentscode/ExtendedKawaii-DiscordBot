@@ -10,7 +10,6 @@ description = "stfurc"
 async def execute(message):
     shv = shelve.open("shutup_radio.config")
     if 'lena_counter' in shv:
-        shv['lena_counter'] = shv['lena_counter'] + 1
         ctr = int(shv.get('lena_counter'))
     else:
         shv['lena_counter'] = 1
