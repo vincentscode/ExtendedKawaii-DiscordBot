@@ -16,4 +16,5 @@ async def execute(message):
         shv['lena_counter'] = 1
         ctr = 1
     shv.close()
-    await message.channel.send('Lena wurde schon zum {} Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr))
+    print(ctr)
+    await message.channel.send('Lena wurde schon zum {} Mal mit einem Radio zum schweigen gebracht.'.format(ctr))
