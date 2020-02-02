@@ -1,6 +1,6 @@
 from colorama import Fore
 from config import token, prefix, dev_mode
-from helpers import print
+from helpers import print, parse
 import actions
 import actions.readme
 import actions.settings
@@ -11,17 +11,6 @@ if dev_mode:
     import importlib
 
 client = discord.Client()
-
-
-def parse(message: discord.Message):
-    split = message.content.split(' ')
-    command = split[0][1:]
-    channel = message.channel
-    params = split[1:]
-    mentions = message.mentions
-    author = message.author
-
-    return command.lower(), channel, params, mentions, author
 
 
 @client.event

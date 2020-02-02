@@ -2,6 +2,8 @@ import random
 from datetime import datetime
 import builtins
 import os
+import discord
+from fuzzywuzzy import process
 from colorama import Fore
 import requests
 
@@ -34,6 +36,17 @@ def print(*args, log_level=0, end="\n"):
     builtins.print(print_string, end=end)
     log_file.write(print_string + end)
     log_file.flush()
+
+
+def parse(message: discord.Message):
+    split = message.content.split(' ')
+    command = split[0][1:]
+    channel = message.channel
+    params = split[1:]
+    mentions = message.mentions
+    author = message.author
+
+    return command.lower(), channel, params, mentions, author
 
 
 def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
@@ -106,3 +119,17 @@ def get_goat():
     goat = random.choice(goats)
     print(goat, "<-", len(goats))
     return goat
+
+
+def get_islieb(term=None):
+    comics = [g for g in os.listdir(dir_path + '/assets/islieb/') if not g.endswith('.mp4') and not g.endswith('.db')]
+    if term is None:
+        print("Getting random comic")
+        comic = random.choice(comics)
+        print(comic, "<-", len(comics))
+    else:
+        print("Searching for comic:", term)
+        comic = random.choice([x for x in process.extract(term, comics, limit=15) if x[1] > 75])[0]
+        print(comic, "<-", term)
+
+    return comic
