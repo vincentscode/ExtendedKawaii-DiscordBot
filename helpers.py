@@ -129,7 +129,12 @@ def get_islieb(term=None):
         print(comic, "<-", len(comics))
     else:
         print("Searching for comic:", term)
-        comic = random.choice([x for x in process.extract(term, comics, limit=15) if x[1] > 75])[0]
+        term_comics = [x for x in process.extract(term, comics, limit=15) if x[1] > 75]
+        if len(term_comics) > 0:
+            comic = random.choice(term_comics)[0]
+        else:
+            print("using random")
+            comic = random.choice(comics)
         print(comic, "<-", term)
 
     return comic
