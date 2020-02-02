@@ -8,7 +8,7 @@ accepts_mention = False
 description = "ZIEGEN! :boom:"
 
 
-async def execute(message):
+async def execute(message: discord.Message):
     gifs = []
     num = 5
 
