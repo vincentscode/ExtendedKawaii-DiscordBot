@@ -8,6 +8,10 @@ description = "Radio - geht ins Ohr, bleibt im Kopf"
 
 
 async def execute(message):
+    if message.author.name == "keinkreativerNutzername" and message.author.discriminator == "5012":
+        await message.channel.send("Nein.")
+        return
+
     embed = discord.Embed()
     if len(message.mentions) != 0:
         msg = 'Shut up, {}!'.format(message.mentions[0].mention)
