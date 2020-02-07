@@ -24,14 +24,15 @@ async def execute(message):
         await message.channel.send(embed=embed)
         return
 
-    if command == "maxitogo+" or command == "maxitogospecial":
-        embed.description = "MaxiToGo Spezial wird geliefert!"
-        img = get_maxi()
-        file = discord.File(dir_path + "/assets/maxitogo/" + img, filename=img)
-        embed.set_image(url="attachment://" + img)
-        await message.channel.send(file=file, embed=embed)
-        return
     if config.test_mode or (message.mentions[0].name == "Fera" and message.mentions[0].discriminator == "7616"):
+        if command == "maxitogo+" or command == "maxitogospecial":
+            embed.description = "MaxiToGo Spezial wird geliefert!"
+            img = get_maxi()
+            file = discord.File(dir_path + "/assets/maxitogo/" + img, filename=img)
+            embed.set_image(url="attachment://" + img)
+            await message.channel.send(file=file, embed=embed)
+            return
+
         if random.choice([True, True, True, True, True, False]):
             embed.description = "MaxiToGo wird geliefert!"
             gif = get_gif('delivery', wo_anime=True, pos=0, lmt=10)
