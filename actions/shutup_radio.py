@@ -4,7 +4,7 @@ import shelve
 commands = ["stfur"]
 requires_mention = False
 accepts_mention = True
-description = "RADIO-POWER!"
+description = "Radio - geht ins Ohr, bleibt im Kopf"
 
 
 async def execute(message):

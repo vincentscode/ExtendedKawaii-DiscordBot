@@ -121,6 +121,13 @@ def get_goat():
     return goat
 
 
+def get_maxi():
+    maxis = [g for g in os.listdir(dir_path + '/assets/maxitogo/') if not g.endswith('.mp4') and not g.endswith('.db')]
+    maxi = random.choice(maxis)
+    print(maxi, "<-", len(maxis))
+    return maxi
+
+
 def get_islieb(term=None):
     comics = [g for g in os.listdir(dir_path + '/assets/islieb/') if not g.endswith('.mp4') and not g.endswith('.db')]
     if term is None:
