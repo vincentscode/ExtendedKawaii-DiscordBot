@@ -9,7 +9,7 @@ description = "Eine Kissenschlacht! <:ishappy:682625825824440353>"
 
 async def execute(message):
     if len(message.mentions) == 0:
-        await message.channel.send("Wen denn? o.O\n(Bitte gib einen gültigen Nutzer an)")
+        await message.channel.send("Mit wem denn? o.O\n(Bitte gib einen gültigen Nutzer an)")
         return
         
     gif = get_gif('pillow fight')
