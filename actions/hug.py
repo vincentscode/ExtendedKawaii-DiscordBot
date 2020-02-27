@@ -28,7 +28,7 @@ async def execute(message):
     else:
         # 0 mentions
         embed.description = f"{message.author.mention} umarmt sich selbst owo"
-        gif = get_gif("selfhug")
+        gif = get_gif("selfhug", lmt=25, pos=0)
             
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)
