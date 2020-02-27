@@ -36,7 +36,9 @@ async def on_message(message: discord.Message):
             print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Sending readme ({len(actions.actions)} actions)")
             inline = True
             if len(params) != 0:
-                if params[0] == '1':
+                if params[0] == '0' or params[0] == 'short':
+                    inline = True
+                elif params[0] == '1' or params[0] == 'long':
                     inline = False
 
             embed = discord.Embed()
@@ -46,7 +48,9 @@ async def on_message(message: discord.Message):
             page_itr = 1
             for action in actions.actions:
                 cmd_append = ""
-                if action.requires_mention:
+                if 'readme' in action.commands:
+                    cmd_append = " [Optional: Stil 0 (Default) / 1]"
+                elif action.requires_mention:
                     cmd_append = " [Person]"
                 elif action.accepts_mention:
                     cmd_append = " [Optional: Person]"
@@ -54,11 +58,14 @@ async def on_message(message: discord.Message):
                 itr += 1
                 if itr == 24:
                     page_itr += 1
+                    print(f"Sending \"{embed.title}\"")
                     await channel.send(embed=embed)
                     embed = discord.Embed()
                     embed.title = f"Liste der Befehle {page_itr}/{math.ceil(len(actions.actions) / 24)}"
                     embed.description = 'Prefix: ' + prefix
+                    itr = 0
             if len(embed.fields) != 0:
+                print(f"Sending \"{embed.title}\"")
                 await channel.send(embed=embed)
 
         elif command in actions.settings.commands:
