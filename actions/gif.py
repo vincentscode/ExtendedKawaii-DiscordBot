@@ -18,10 +18,21 @@ async def execute(message):
 
     if len(actual_params) == 0:
         await message.channel.send("Wozu denn? o.O\n(Bitte gib einen Suchterm an)")
+    if "@pos" in actual_params:
+        lmt = 1
+        pos = int(actual_params[actual_params.index("@pos")+1])
+        check_last = False
+        actual_params.remove(actual_params[actual_params.index("@pos")+1])
+        actual_params.remove("@pos")
+        print(actual_params)
+    else:
+        lmt = 30
+        pos = 0
+        check_last = True
 
-    gif = get_gif(' '.join(actual_params), wo_anime=True)
+    gif = get_gif(' '.join(actual_params), wo_anime=True, lmt=lmt, pos=pos, check_last=check_last)
 
     embed = discord.Embed()
-    embed.description = f'Gif zu \"{" ".join(actual_params)}\"'
+    embed.description = f'Gif zu \"{" ".join(actual_params)}\"{f" @ Position {pos} "if lmt == 1 else ""}'
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)

@@ -20,10 +20,10 @@ async def execute(message):
     for itm in data:
         c = itm['commit']
         commit_message = c['message']
-        sha = c['tree']['sha'][:7]
         url = itm["html_url"]
         time = datetime.strptime(c["author"]["date"], "%Y-%m-%dT%H:%M:%SZ")
-        name = c["author"]["name"]
+        # sha = c['tree']['sha'][:7]
+        # author_name = c["author"]["name"]
 
         embed.description += f'[``{time.strftime("%d.%m.%Y, %H:%M")}``]({url}) {commit_message}\n'
 

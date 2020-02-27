@@ -49,7 +49,7 @@ def parse(message: discord.Message):
     return command.lower(), channel, params, mentions, author
 
 
-def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
+def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_last=True):
     global last_gif
     print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Get")
 
@@ -71,7 +71,7 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None):
         if r.status_code == 200:
             gifs = r.json()
             options = [itm["media"][0]['gif']["url"] for itm in gifs["results"]]
-            if last_gif in options:
+            if last_gif in options and check_last:
                 options.remove(last_gif)
                 print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in options", len(options))
             sel = random.choice(options)
