@@ -13,7 +13,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 for itm in sorted(os.listdir(dir_path)):
     if itm.startswith("__"):
         continue
-    print("Loading", itm)
+    # print("Loading", itm)
 
     spec = importlib.util.spec_from_file_location(itm, dir_path + "/" + itm)
     loaded_module = importlib.util.module_from_spec(spec)

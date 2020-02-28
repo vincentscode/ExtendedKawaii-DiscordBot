@@ -6,6 +6,8 @@ import discord
 from fuzzywuzzy import process
 from colorama import Fore
 import requests
+import config
+import importlib.util
 
 from config import tenor_key, giphy_key
 
@@ -36,6 +38,36 @@ def print(*args, log_level=0, end="\n"):
     builtins.print(print_string, end=end)
     log_file.write(print_string + end)
     log_file.flush()
+
+
+async def check_admin_permissions(message):
+    if message.author._user.id not in config.admin_ids:
+        e = discord.Embed()
+        e.title = '❗ Fehler'
+        e.description = "Du hast nicht die erforderlichen Berechtigungen um diesen Befehl zu benutzen.\n" \
+                        "Wenn du denkst, dass du diesen Befehl benutzen dürfen solltest, wende dich an <@363354366113087491>."
+        await message.channel.send(embed=e)
+        return False
+    else:
+        return True
+
+
+def get_server_actions(server_id):
+    actions = []
+    command_actions = {}
+
+    server_path = dir_path + "/server_actions/" + str(server_id)
+    for itm in sorted(os.listdir(server_path)):
+        if itm.startswith("__"):
+            continue
+
+        spec = importlib.util.spec_from_file_location(itm, server_path + "/" + itm)
+        loaded_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loaded_module)
+        actions.append(loaded_module)
+        for command in loaded_module.commands:
+            command_actions[command] = loaded_module
+    return command_actions, actions
 
 
 def parse(message: discord.Message):

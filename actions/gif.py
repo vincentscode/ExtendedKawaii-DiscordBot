@@ -1,5 +1,5 @@
 import discord
-from helpers import get_gif, parse
+from helpers import get_gif, parse, check_admin_permissions
 
 commands = ["gif"]
 requires_mention = False
@@ -8,6 +8,9 @@ description = "Ein gif o.O"
 
 
 async def execute(message):
+    if not await check_admin_permissions(message):
+        return
+
     command, channel, params, mentions, author = parse(message)
     mention_strings = [m.mention for m in mentions]
     actual_params = []
@@ -18,6 +21,7 @@ async def execute(message):
 
     if len(actual_params) == 0:
         await message.channel.send("Wozu denn? o.O\n(Bitte gib einen Suchterm an)")
+        return
     if "@pos" in actual_params:
         lmt = 1
         pos = int(actual_params[actual_params.index("@pos")+1])

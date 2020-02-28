@@ -1,6 +1,6 @@
 from colorama import Fore
 from config import token, prefix, dev_mode
-from helpers import print, parse
+from helpers import print, parse, get_server_actions
 import actions
 import actions.readme
 import actions.settings
@@ -30,7 +30,23 @@ async def on_message(message: discord.Message):
     command, channel, params, mentions, author = parse(message)
     if dev_mode:
         importlib.reload(actions)
-    if command in actions.command_actions.keys():
+
+    if command in get_server_actions(channel.guild.id)[0].keys():
+        print(f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] Executing Server Command {command} {author.name}#{author.discriminator}: \"{message.content}\"")
+
+        class ChannelWrapper:
+            def __init__(self, original):
+                self.original = original
+
+            async def send(self, content=None, *, tts=False, embed: discord.Embed=None, file=None, files=None, delete_after=None, nonce=None):
+                if embed is not None:
+                    embed.colour = discord.Colour.from_rgb(156, 52, 137)
+                return await self.original.send(content=content, tts=tts, embed=embed, file=file, files=files, delete_after=delete_after, nonce=nonce)
+
+        message.channel = ChannelWrapper(message.channel)
+        await get_server_actions(channel.guild.id)[0][command].execute(message)
+
+    elif command in actions.command_actions.keys():
         print(f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\"")
 
         if command in actions.readme.commands:

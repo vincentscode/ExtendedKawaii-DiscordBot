@@ -305,8 +305,8 @@ dmypy.json
 /assets/
 /logs/
 /cache/
-/proposed_commands/
+/server_actions/
+/server_proposed_actions/
 
-test_downloader.py
 test.py
 *.config.*

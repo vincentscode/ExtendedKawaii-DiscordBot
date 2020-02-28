@@ -2,12 +2,11 @@ import asyncio
 import os
 import random
 import re
-
 from helpers import print
 import discord
 import helpers
 
-commands = ["cmdvorschlag", "addcmd", "propcmd", "proposecommand", "+cmd"]
+commands = ["proposecommand", "proposecmd", "+cmd", "cmdvorschlag", "addcmd", ]
 requires_mention = False
 accepts_mention = False
 description = "Befehle vorschlagen :O"
@@ -68,10 +67,14 @@ async def execute(message, client):
         proposed_cmd['response_description_ping'] = (msg.content if msg.content != 'None' else None)
         return 1
 
-    def step_request_command(msg):
+    def step_request_command(msg: discord.Message):
         print("Requested Command:", proposed_cmd)
 
-        dir_path = helpers.dir_path + "/proposed_commands"
+        dir_path = helpers.dir_path + "/server_proposed_actions"
+        if not os.path.exists(dir_path):
+            os.mkdir(dir_path)
+
+        dir_path += "/" + str(msg.channel.guild.id)
         if not os.path.exists(dir_path):
             os.mkdir(dir_path)
 
@@ -106,8 +109,14 @@ async def execute(message):
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)
 '''
-        file_name = re.sub(r'[\\/*?:"<>|]', '', proposed_cmd['proposed_command_author'] + proposed_cmd['proposed_command_name'] + str(random.randint(0, 2000)))
-        f = open(dir_path + "/" + file_name + ".py", "w")
+        save_author_name = re.sub(r'[\\/*?:"<>|]', '', proposed_cmd['proposed_command_author'])
+        save_command_name = re.sub(r'[\\/*?:"<>|]', '', proposed_cmd['proposed_command_name'])
+
+        author_path = dir_path + "/" + save_author_name
+        if not os.path.exists(author_path):
+            os.mkdir(author_path)
+
+        f = open(author_path + "/" + save_command_name + ".py", "w")
         f.write(command_template)
         f.flush()
         f.close()
@@ -187,7 +196,6 @@ async def execute(message):
     ]
 
     t_out = 60.0
-
     menu_idx = 0
 
     while True:
@@ -220,4 +228,3 @@ async def execute(message):
                 return
 
             menu_idx += resp
-
