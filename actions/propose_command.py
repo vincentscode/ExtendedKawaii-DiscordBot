@@ -5,7 +5,6 @@ import re
 
 from helpers import print
 import discord
-import main
 import helpers
 
 commands = ["cmdvorschlag", "addcmd", "propcmd", "proposecommand", "+cmd"]
@@ -203,6 +202,7 @@ async def execute(message):
             return msg.channel == message.channel.original and msg.author.mention == message.author.mention
 
         try:
+            import main
             response_msg = await main.client.wait_for('message', timeout=t_out, check=response_check)
             print("Waiting for Response (Timeout: " + str(t_out) + ")")
         except asyncio.TimeoutError:
