@@ -57,6 +57,8 @@ def get_server_actions(server_id):
     command_actions = {}
 
     server_path = dir_path + "/server_actions/" + str(server_id)
+    if not os.path.exists(server_path):
+        os.mkdir(server_path)
     for itm in sorted(os.listdir(server_path)):
         if itm.startswith("__"):
             continue
