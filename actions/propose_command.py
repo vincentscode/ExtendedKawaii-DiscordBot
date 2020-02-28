@@ -98,9 +98,9 @@ async def execute(message):
             embed.description = f"{proposed_cmd['response_description_ping'].replace('{Pings}', "{', '.join([x.mention for x in message.mentions])}").replace('{Author}', '{message.author.mention}')}"
         else:
             # 0 mentions
-            embed.description = "{proposed_cmd['response_description'].replace('{Author}', '{message.author.mention}')}"
+            embed.description = f"{proposed_cmd['response_description'].replace('{Author}', '{message.author.mention}')}"
     else:
-        embed.description = "{proposed_cmd['response_description'].replace('{Author}', '{message.author.mention}')}"
+        embed.description = f"{proposed_cmd['response_description'].replace('{Author}', '{message.author.mention}')}"
 
     embed.set_footer(text="Ein Befehl von {proposed_cmd['proposed_command_author']}", icon_url="{proposed_cmd['proposed_command_author_icon']}")
     embed.set_image(url=gif)
