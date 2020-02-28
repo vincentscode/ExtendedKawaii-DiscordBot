@@ -31,7 +31,7 @@ class MenuStep:
         return self.on_next_command(msg)
 
 
-async def execute(message):
+async def execute(message, client):
     proposed_cmd = {}
 
     def get_status():
@@ -202,8 +202,7 @@ async def execute(message):
             return msg.channel == message.channel.original and msg.author.mention == message.author.mention
 
         try:
-            import main
-            response_msg = await main.client.wait_for('message', timeout=t_out, check=response_check)
+            response_msg = await client.wait_for('message', timeout=t_out, check=response_check)
             print("Waiting for Response (Timeout: " + str(t_out) + ")")
         except asyncio.TimeoutError:
             print("No Response (Timeout)")

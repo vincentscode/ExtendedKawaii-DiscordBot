@@ -4,6 +4,7 @@ from helpers import print, parse
 import actions
 import actions.readme
 import actions.settings
+import actions.propose_command
 import discord
 import math
 
@@ -80,6 +81,19 @@ async def on_message(message: discord.Message):
                 # for setting_name in actions.settings.settings:
                 #     embed.add_field(name='**' + ' / '.join(setting_name) + '**', value=actions.settings.settings[setting_name])
                 # await channel.send(embed=embed)
+        elif command in actions.propose_command.commands:
+            class ChannelWrapper:
+                def __init__(self, original):
+                    self.original = original
+
+                async def send(self, content=None, *, tts=False, embed: discord.Embed=None, file=None, files=None, delete_after=None, nonce=None):
+                    if embed is not None:
+                        embed.colour = discord.Colour.from_rgb(156, 52, 137)
+                    return await self.original.send(content=content, tts=tts, embed=embed, file=file, files=files, delete_after=delete_after, nonce=nonce)
+
+            message.channel = ChannelWrapper(message.channel)
+            await actions.command_actions[command].execute(message, client)
+
 
         else:
             class ChannelWrapper:
