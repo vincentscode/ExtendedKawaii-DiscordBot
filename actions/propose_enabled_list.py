@@ -10,9 +10,6 @@ description = "Erlaubte Befehle auflisten"
 
 
 async def execute(message):
-    if not await check_admin_permissions(message):
-        return
-
     dir_path = helpers.dir_path + "/server_actions"
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
