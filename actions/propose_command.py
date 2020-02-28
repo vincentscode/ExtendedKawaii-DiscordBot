@@ -11,7 +11,7 @@ import helpers
 commands = ["cmdvorschlag", "addcmd", "propcmd", "proposecommand", "+cmd"]
 requires_mention = False
 accepts_mention = False
-description = "Propose a command for me :O"
+description = "Befehle vorschlagen :O"
 
 
 class MenuStep:
@@ -50,7 +50,7 @@ async def execute(message):
     def step_name(msg: discord.Message):
         proposed_cmd['proposed_command_name'] = msg.content
         proposed_cmd['proposed_command_author'] = msg.author.name + "#" + msg.author.discriminator
-        proposed_cmd['proposed_command_author_icon'] = msg.author.avatar_url
+        proposed_cmd['proposed_command_author_icon'] = str(msg.author.avatar_url)
         return 1
 
     def step_aliases(msg):
@@ -80,7 +80,7 @@ async def execute(message):
 import discord
 from helpers import get_gif
 
-commands = ["{proposed_cmd['proposed_command_name']}"{", " + ', '.join(["'" + x + "'" for x in proposed_cmd['proposed_command_aliases']]) if proposed_cmd['proposed_command_aliases'] is not None and len(proposed_cmd['proposed_command_aliases']) != 0 else ""}]
+commands = ["{proposed_cmd['proposed_command_name']}"]
 requires_mention = False
 accepts_mention = {'{Pings}' in proposed_cmd['response_description_ping']}
 description = "{proposed_cmd['proposed_command_name']} by {proposed_cmd['proposed_command_author']}"
@@ -96,18 +96,19 @@ async def execute(message):
             embed.description = f"{proposed_cmd['response_description_ping'].replace('{Pings}', '{message.mentions[0].mention}').replace('{Author}', '{message.author.mention}')}"
         elif len(message.mentions) > 1:
             # > 1 mentions
-            embed.description = f"{proposed_cmd['response_description_ping'].replace('{Pings}', '{', '.join([x.mention for x in message.mentions]}').replace('{Author}', '{message.author.mention}')}"
+            embed.description = f"{proposed_cmd['response_description_ping'].replace('{Pings}', "{', '.join([x.mention for x in message.mentions])}").replace('{Author}', '{message.author.mention}')}"
         else:
             # 0 mentions
             embed.description = "{proposed_cmd['response_description'].replace('{Author}', '{message.author.mention}')}"
     else:
         embed.description = "{proposed_cmd['response_description'].replace('{Author}', '{message.author.mention}')}"
-    
+
     embed.set_footer(text="Ein Befehl von {proposed_cmd['proposed_command_author']}", icon_url="{proposed_cmd['proposed_command_author_icon']}")
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)
 '''
-        f = open(dir_path + "/" + re.sub(r'[\\/*?:"<>|]', '', proposed_cmd['proposed_command_author'] + proposed_cmd['proposed_command_name'] + str(random.randint(0, 2000))) + ".py", "w", encoding="utf8")
+        file_name = re.sub(r'[\\/*?:"<>|]', '', proposed_cmd['proposed_command_author'] + proposed_cmd['proposed_command_name'] + str(random.randint(0, 2000)))
+        f = open(dir_path + "/" + file_name + ".py", "w")
         f.write(command_template)
         f.flush()
         f.close()

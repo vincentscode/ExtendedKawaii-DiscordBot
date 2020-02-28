@@ -10,7 +10,7 @@ actions = []
 command_actions = {}
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-for itm in os.listdir(dir_path):
+for itm in sorted(os.listdir(dir_path)):
     if itm.startswith("__"):
         continue
 
