@@ -49,6 +49,7 @@ def parse(message: discord.Message):
     return command.lower(), channel, params, mentions, author
 
 
+# TODO: Tumblr as Source
 def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_last=True):
     global last_gif
     print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Get")

@@ -305,6 +305,7 @@ dmypy.json
 /assets/
 /logs/
 /cache/
+/proposed_commands/
 
 test_downloader.py
 test.py
