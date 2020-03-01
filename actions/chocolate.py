@@ -4,7 +4,7 @@ from helpers import get_gif
 commands = ["schoki", "givechocolate", "chocolate"]
 requires_mention = False
 accepts_mention = True
-description = "chocolate"
+description = ":chocolate_bar:"
 
 
 async def execute(message):
