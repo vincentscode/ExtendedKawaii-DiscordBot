@@ -1,5 +1,5 @@
 import discord
-from helpers import get_gif
+from helpers import get_gif, parse
 
 commands = ["umarm"]
 requires_mention = False
@@ -7,7 +7,9 @@ accepts_mention = True
 description = "<:knuddelfin:493889242703986721>"
 
 
-async def execute(message):
+async def execute(message: discord.Message):
+    command, channel, params, mentions, author = parse(message)
+
     embed = discord.Embed()
 
     if len(message.mentions) == 1 and message.mentions[0].mention == message.author.mention:
@@ -26,9 +28,14 @@ async def execute(message):
         gif = get_gif('group hug', lmt=15, pos=0)
 
     else:
-        # 0 mentions
-        embed.description = f"{message.author.mention} umarmt sich selbst owo"
-        gif = get_gif("selfhug", lmt=25, pos=0)
-            
+        if message.mention_everyone or len(params) == 1 and params[0] == "alle" or len(params) == 1 and params[0] == "@everyone" or len(params) == 1 and params[0] == "@alle":
+            # all mentions
+            embed.description = f"{message.author.mention} umarmt alle <:ishappy:441572301167656971>"
+            gif = get_gif('group hug', lmt=15, pos=0)
+        else:
+            # 0 mentions
+            embed.description = f"{message.author.mention} umarmt sich selbst owo"
+            gif = get_gif("selfhug", lmt=25, pos=0)
+
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)
