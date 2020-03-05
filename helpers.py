@@ -41,11 +41,14 @@ def print(*args, log_level=0, end="\n"):
 
 
 async def check_admin_permissions(message):
-    if message.author._user.id not in config.admin_ids:
+    member: discord.Member = message.guild.get_member(message.author.id)
+
+    if message.author._user.id not in config.admin_ids and not member.guild_permissions.administrator:
         e = discord.Embed()
         e.title = '❗ Fehler'
         e.description = "Du hast nicht die erforderlichen Berechtigungen um diesen Befehl zu benutzen.\n" \
-                        "Wenn du denkst, dass du diesen Befehl benutzen dürfen solltest, wende dich an <@363354366113087491>."
+                        "Nur Server-Mods und vom Bot-Autor ausgewählte Personen können diesen Befehl ausführen.\n" \
+                        "Du kannst dir authorisierte Personen mit ``+op`` anzeigen lassen."
         await message.channel.send(embed=e)
         return False
     else:
