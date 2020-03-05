@@ -15,7 +15,7 @@ async def execute(message):
     e.title = 'Liste der authorisierten User'
 
     authorized_ids = [x for x in config.admin_ids]
-    server_authorized_ids = [x.id for x in message.guild.members if x.guild_permissions.administrator and x.id not in authorized_ids]
+    server_authorized_ids = [member.id for member in message.guild.members if (member.guild_permissions.administrator or member.guild_permissions.manage_messages or member.guild_permissions.manage_roles) and member.id not in authorized_ids]
 
     e.description = f"**Programmierer**\n<@{authorized_ids[0]}>\n\n**Trusted Users**\n"
     for id in authorized_ids[1:]:
