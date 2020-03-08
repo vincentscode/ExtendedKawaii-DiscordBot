@@ -20,6 +20,6 @@ async def execute(message):
             else:
                 ctr = 0
         shv.close()
-        await message.channel.send('{} wurde schon zum {}. Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr))
+        await message.channel.send('{} wurde schon {} Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr))
     else:
         await message.channel.send('Für welchen User?')
