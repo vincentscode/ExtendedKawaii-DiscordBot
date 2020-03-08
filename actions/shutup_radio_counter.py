@@ -13,13 +13,13 @@ async def execute(message):
             if 'lena_counter' in shv:
                 ctr = int(shv.get('lena_counter'))
             else:
-                ctr = 1
+                ctr = 0
         else:  # general user id based counter
             if str(message.mentions[0].id) in shv:
                 ctr = int(shv.get(str(message.mentions[0].id)))
             else:
-                ctr = 1
+                ctr = 0
         shv.close()
-        await message.channel.send('{} wurde schon zum {} Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr))
+        await message.channel.send('{} wurde schon zum {}. Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr))
     else:
         await message.channel.send('Für welchen User?')
