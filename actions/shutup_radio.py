@@ -8,24 +8,26 @@ description = "Radio - geht ins Ohr, bleibt im Kopf"
 
 
 async def execute(message):
-    if message.author.name == "keinkreativerNutzername" and message.author.discriminator == "5012":
-        await message.channel.send("Nein.")
-        return
-
     embed = discord.Embed()
     if len(message.mentions) != 0:
-        msg = 'Shut up, {}!'.format(message.mentions[0].mention)
-        if message.mentions[0].name == "keinkreativerNutzername" and message.mentions[0].discriminator == "5012":
-            shv = shelve.open("shutup_radio.config")
+        shv = shelve.open("shutup_radio.config")
+        if message.mentions[0].id == 545558883431874580:  # Maluka Legacy
             if 'lena_counter' in shv:
                 shv['lena_counter'] = shv['lena_counter'] + 1
                 ctr = int(shv.get('lena_counter'))
             else:
                 shv['lena_counter'] = 1
                 ctr = 1
-            shv.close()
+        else:  # general user id based counter
+            if str(message.mentions[0].id) in shv:
+                shv[str(message.mentions[0].id)] = shv[str(message.mentions[0].id)] + 1
+                ctr = int(shv.get(str(message.mentions[0].id)))
+            else:
+                shv[str(message.mentions[0].id)] = 1
+                ctr = 1
+        shv.close()
 
-            msg = 'Shut up, {}!\nDu wurdest zum {} Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr)
+        msg = 'Shut up, {}!\nDu wurdest zum {}. Mal mit einem Radio zum schweigen gebracht.'.format(message.mentions[0].mention, ctr)
     else:
         msg = 'Shut up!'
     embed.description = msg
