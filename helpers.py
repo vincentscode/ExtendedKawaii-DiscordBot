@@ -7,12 +7,13 @@ from fuzzywuzzy import process
 from colorama import Fore
 import requests
 import config
+from bs4 import BeautifulSoup
 import importlib.util
 
 from config import tenor_key, giphy_key
 
 last_gif = None
-platforms = platforms_with_local = ["tenor"]
+platforms = platforms_with_local = ["fallback"]
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -120,7 +121,7 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
             return None
     elif platform == "giphy":
         if pos is None:
-            pos = random.randint(0, 4)
+            pos = random.randint(0, 25)
         if not wo_anime:
             search_term = 'anime ' + search_term
 
@@ -150,6 +151,46 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
         last_gif = sel
         print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
         return dir_path + f"/cache/{search_term}/tenor/" + sel
+    elif platform == "fallback":
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Fallback |", search_term)
+
+        if pos is None:
+            pos = random.randint(0, 25)
+        if not wo_anime:
+            search_term = 'anime ' + search_term
+
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Fallback |", search_term, lmt, pos)
+
+        headers = {
+            'authority': 'tenor.com',
+            'pragma': 'no-cache',
+            'cache-control': 'no-cache',
+            'dnt': '1',
+            'upgrade-insecure-requests': '1',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
+            'sec-fetch-dest': 'document',
+            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'sec-fetch-site': 'same-origin',
+            'sec-fetch-mode': 'navigate',
+            'sec-fetch-user': '?1',
+            'accept-language': 'en-DE,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6',
+        }
+
+        r = requests.get(f'https://tenor.com/search/{search_term.replace(" ", "-")}-gifs', headers=headers)
+
+        if r.status_code == 200:
+            s = BeautifulSoup(r.text, 'html.parser')
+            gifs = gifs = [x["src"] for x in s.find_all("img") if x["src"].startswith("https://media.tenor.com/")]
+            if pos == 0 and lmt is not None:
+                gifs = gifs[:lmt]
+            if last_gif in gifs:
+                gifs.remove(last_gif)
+                print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in gifs", len(gifs))
+            sel = random.choice(gifs)
+            last_gif = sel
+            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel, "<-", gifs)
+            return sel
+
 
 
 def get_goat():
