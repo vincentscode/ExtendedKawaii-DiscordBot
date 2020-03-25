@@ -152,8 +152,6 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
         print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
         return dir_path + f"/cache/{search_term}/tenor/" + sel
     elif platform == "fallback":
-        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Fallback |", search_term)
-
         if pos is None:
             pos = random.randint(0, 25)
         if not wo_anime:
@@ -190,7 +188,6 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
             last_gif = sel
             print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel, "<-", gifs)
             return sel
-
 
 
 def get_goat():
