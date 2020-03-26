@@ -13,7 +13,7 @@ import importlib.util
 from config import tenor_key, giphy_key
 
 last_gif = None
-platforms = platforms_with_local = ["fallback"]
+platforms = platforms_with_local = ["discord"]
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -92,7 +92,7 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
     global last_gif
     print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Get")
 
-    if platform is None:
+    if True: # platform is None:
         if os.path.exists("cache/") and search_term in os.listdir("cache/"):
             platform = random.choice(platforms_with_local)
         else:
@@ -151,6 +151,28 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
         last_gif = sel
         print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", dir_path + f"/cache/{search_term}/tenor/" + sel, "<-", f"cache/{search_term}/tenor")
         return dir_path + f"/cache/{search_term}/tenor/" + sel
+    elif platform == "discord":
+        if pos is None:
+            pos = random.randint(0, 100)
+        if not wo_anime:
+            search_term = 'anime ' + search_term
+
+        print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Using: Discord |", search_term, lmt, pos)
+        r = requests.get(f"https://discordapp.com/api/v6/gifs/search?q={search_term}&media_format=gif")
+
+        if r.status_code == 200:
+            gifs = [x["src"] for x in r.json()]
+            if pos == 0 and lmt is not None:
+                gifs = gifs[:lmt]
+            if last_gif in gifs:
+                gifs.remove(last_gif)
+                print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in gifs", len(gifs))
+            sel = random.choice(gifs)
+            last_gif = sel
+            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel, "<-", gifs)
+            return sel
+        else:
+            return None
     elif platform == "fallback":
         if pos is None:
             pos = random.randint(0, 25)
