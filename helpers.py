@@ -87,12 +87,11 @@ def parse(message: discord.Message):
     return command.lower(), channel, params, mentions, author
 
 
-# TODO: Tumblr as Source
 def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_last=True):
     global last_gif
     print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}] Get")
 
-    if True: # platform is None:
+    if True:  # platform is None:
         if os.path.exists("cache/") and search_term in os.listdir("cache/"):
             platform = random.choice(platforms_with_local)
         else:

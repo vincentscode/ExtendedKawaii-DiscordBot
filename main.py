@@ -21,6 +21,21 @@ async def on_guild_join(guild):
 
 
 @client.event
+async def on_guild_update(old_guild, new_guild):
+    print("Guild was updated", old_guild, "=>", new_guild)
+
+
+@client.event
+async def on_guild_remove(guild):
+    print("Left guild", guild)
+
+
+@client.event
+async def on_member_ban(guild, user):
+    print("Guild", guild, "banned", user)
+
+
+@client.event
 async def on_message(message: discord.Message):
     if message.author == client.user:
         return
