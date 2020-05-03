@@ -15,7 +15,7 @@ async def execute(message):
         await message.channel.send("Du kannst dich selbst umarmen, such dir zum kuscheln eine Decke - das funktioniert so nicht! <:trollface:496805278587551766>")
         return
 
-    gif = get_gif('cat cuddle', wo_anime=True, pos=0, lmt=50)
+    gif = get_gif('cat cuddle', wo_anime=True)
 
     embed = discord.Embed()
     if len(message.mentions) == 1:

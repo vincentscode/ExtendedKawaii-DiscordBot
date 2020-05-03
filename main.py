@@ -13,6 +13,7 @@ if dev_mode:
 
 client = discord.Client()
 
+blocklist = ["193350207776358400"]
 
 @client.event
 async def on_guild_join(guild):

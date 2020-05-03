@@ -89,13 +89,13 @@ async def execute(message):
     dec = demjson.decode(rtxt3)
 
     status = {
-        "danger": ":white_check_mark: Keine Störung bei Discord",
+        "success": ":white_check_mark: Keine Störung bei Discord",
         "warning": ":warning: Möglicherweise Störung bei Discord",
-        "success": ":exclamation: Störung bei Discord",
+        "danger": ":exclamation: Störung bei Discord",
     }
     e.add_field(name="allestörungen.de", value=status[dec["status"]], inline=False)
 
-    response = requests.get('https://mobile.twitter.com/discordapp', headers=tw_headers)
+    response = requests.get('https://mobile.twitter.com/discord', headers=tw_headers)
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
     # main_content > div.timeline > table:nth-child(2) > tbody > tr.tweet-container > td > div.tweet-text
     se = soup.find("td", {"class": "tweet-content"})
