@@ -21,8 +21,8 @@ uwu_dictionary = {
 }
 
 
-async def execute(message):
-    '''
+async def execute(message: discord.Message):
+    """
     this command turns ordinary text messages to uwu text
     i.g. 'i want to shoot myself' -> 'i want 2 shOwOt mysewf'
 
@@ -30,9 +30,9 @@ async def execute(message):
       -some words have alternate meanings once they have been passed trough this translator:
        i.g. 'i hate my life' -> 'i h8 my wife'
        for now this is a feature
-    '''
+    """
     
-    text = message.text
+    text = message.content[len("+uwu"):].strip(" ")
 
     for rule in uwu_dictionary.items():
         text = text.replace(rule[0], rule[1])
