@@ -10,7 +10,7 @@ async def execute(message):
     pig_facts = [
         "Schweine schwitzen gar nicht, sie haben nur wenige Schweißdrüsen auf der Nase. ",
         "Schweine sulen sich im Schlamm um sich vor Insekten und Sonne zu schützen. Sie sind genauso anfällig auf Sonnenbrand wie wir.",
-        "Die kleinste Schweinerases ist das Göttinger Minischwein.",
+        "Die kleinste Schweinerasse ist das Göttinger Minischwein.",
         "Das Göttinger Minischwein wiegt ausgewachsen um die 35kg.",
         "Schweine sind sehr intelligent. Sie können Tricks lernen wie Hunde, kennen ihren Namen, bilden komplexe soziale Einheiten und lernen voneinander.",
         "Anders als es das Klischee sagt, sind Schweine saubere Tiere.",
