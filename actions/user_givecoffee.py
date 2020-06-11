@@ -15,16 +15,16 @@ async def execute(message):
     if accepts_mention:
         if len(message.mentions) == 1:
             # 1 mention
-            embed.description = f"☕"
+            embed.description = f"<:metalcoffee:707941148777512966>"
         elif len(message.mentions) > 1:
             # > 1 mentions
-            embed.description = f"☕"
+            embed.description = f"<:metalcoffee:707941148777512966>"
         else:
             # 0 mentions
-            embed.description = f"☕"
+            embed.description = f"<:metalcoffee:707941148777512966>"
     else:
-        embed.description = f"☕"
+        embed.description = f"<:metalcoffee:707941148777512966>"
 
-    embed.set_footer(text="Ein Befehl von Vincent#0212", icon_url="https://cdn.discordapp.com/avatars/363354366113087491/d9fae1a3efd15458e9d20c6d2a7b0964.webp?size=1024")
+    embed.set_footer(text="Emote von Metalpig#9228", icon_url="https://cdn.discordapp.com/avatars/184358788260691969/6d78b95237f046b2b249f95f4e91dff6.webp?size=128")
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)
