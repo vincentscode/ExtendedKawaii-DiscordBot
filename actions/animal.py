@@ -687,7 +687,7 @@ async def execute(message):
 
     if command == "animal":
         command = random.choice(commands)
-    gif = get_gif(command, pos=0, lmt=10)
+    gif = get_gif(command, pos=0, lmt=10, wo_anime=True)
 
     if gif is None:
         await message.channel.send("Zu diesem Tier gibt es keine Gifs qwq")
