@@ -121,6 +121,8 @@ commands = [
     "cheetah",
     "chickadee",
     "chicken",
+    "chick",
+    "chicks",
     "chicken breeds",
     "chimpanzee",
     "chinchilla",
@@ -386,6 +388,7 @@ commands = [
     "miniature donkey",
     "mink",
     "minke whale",
+    "mini pig",
     "minnow",
     "mite",
     "mockingbird",
@@ -684,7 +687,7 @@ async def execute(message):
 
     if command == "animal":
         command = random.choice(commands)
-    gif = get_gif(command, pos=0, lmt=10, wo_anime=True)
+    gif = get_gif(command, pos=0, lmt=10)
 
     if gif is None:
         await message.channel.send("Zu diesem Tier gibt es keine Gifs qwq")
