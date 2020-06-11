@@ -60,6 +60,7 @@ picture_urls = [
     "https://i.pinimg.com/564x/7d/50/40/7d50400aea50109ed4801e8cae238832.jpg",
     "https://i.pinimg.com/236x/19/63/35/196335abea460f6038049fe5a9baf7e6.jpg",
     "https://i.pinimg.com/564x/f7/2e/78/f72e78f4b962666225f78314fd7be455.jpg",
+    "https://i.pinimg.com/564x/cc/86/8b/cc868b438770f98c3a4b025686ab2791.jpg",
 ]
 
 
