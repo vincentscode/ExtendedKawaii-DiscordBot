@@ -513,6 +513,7 @@ commands = [
     "rodent",
     "rook",
     "rooster",
+    "rosa pig",
     "roundworm",
     "saber-toothed cat",
     "sailfish",
