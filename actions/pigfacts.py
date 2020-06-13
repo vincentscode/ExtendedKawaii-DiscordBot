@@ -26,7 +26,7 @@ async def execute(message):
         "Die Lebenserwartung für ein Hausschwein beträgt 15-20 Jahre.",
         "Schweine gehören zur Ordnung der Paarhufer.",
         "Als Teacup Pig bezeichnet man Mini-Ferkel (Baby Schweinchen), die in eine Teetasse passen. Es stimmt *nicht*, dass diese Schweinchen so klein bleiben.",
-        "Der Mensch und das Schwein haben physiologische und anatomische Ähnlichkeiten. Diese Ähnlichkeiten hat sich der Mensch schon im griechischen Altertum zu Nutze gemacht.",
+        "Der Mensch und das Schwein haben physiologische und anatomische Ähnlichkeiten. Diese Ähnlichkeiten hat sich der Mensch schon im griechischen Altertum zu Nutze gemacht. Zum Beispiel bei der medizinischen Forschung.",
         "Eines der ersten kleinen Schweinchen Rassen ist das Minnesota-Minischwein, welches in den 1940er Jahren in den USA entwickelt wurde.",
         "Schweine sind Allesfresser und *immer* hungrig. (Sie würden auch Menschen essen.)",
         "Eine Sau kann kann bis zu 16 Nippel haben! Üblich sind 12-14. Stell dir vor du hast 12 Brüste, die an dir runter hängen.",
