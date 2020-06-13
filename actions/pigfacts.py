@@ -25,6 +25,18 @@ async def execute(message):
         "Schweine können so tapfer sein, dass sie anderen das Leben retten würden, auch Menschenfreunden.",
         "Die Lebenserwartung für ein Hausschwein beträgt 15-20 Jahre.",
         "Schweine gehören zur Ordnung der Paarhufer.",
+        "Als Teacup Pig bezeichnet man Mini-Ferkel (Baby Schweinchen), die in eine Teetasse passen. Es stimmt *nicht*, dass diese Schweinchen so klein bleiben.",
+        "Der Mensch und das Schwein haben physiologische und anatomische Ähnlichkeiten. Diese Ähnlichkeiten hat sich der Mensch schon im griechischen Altertum zu Nutze gemacht.",
+        "Eines der ersten kleinen Schweinchen Rassen ist das Minnesota-Minischwein, welches in den 1940er Jahren in den USA entwickelt wurde.",
+        "Schweine sind Allesfresser und *immer* hungrig. (Sie würden auch Menschen essen.)",
+        "Eine Sau kann kann bis zu 16 Nippel haben! Üblich sind 12-14. Stell dir vor du hast 12 Brüste, die an dir runter hängen.",
+        "Schweine haben einen besseren Geruchssinn als Hunde. Trüffelschweine suchen Trüffel mit ihrer Nase. :pig_nose:.",
+        "Schweinchen können nicht nach oben gucken (wegen der Anatomie ihrer Muskeln im Nacken). Sie können sich aber auf die Seite legen oder auf ihre Hinterbeine stellen, um nach oben zu sehen.", 
+        "Wusstest du, dass Metalpig total in Schweinchen vernarrt ist? Sie würde am liebsten Schwweinchen mit Drachen kreuzen und eine Armee aufstellen.",
+        "Schweine können sich gegenseitig austricken. So folgen sie gerne ihren Artgenossen, wenn diese auf der Suche nach Nahrung sind, und schnappen ihnen diese dann vor der Nase weg. Diejenigen, die überlistet werden, lernen jedoch, ihr Verhalten zu ändern, damit sie nicht mehr so häufig das Nachsehen haben.",
+        "Schweine fühlen wie wir Schmerz, Leid, Freude und Trauer. Sie können auch Mitgefühl mit anderen Schweinen haben, die leiden.",
+        "Das Kunekune Schwein ist sehr flauschig. Google es! Los! Überzeuge dich von der Flauschigkeit!",
+        
     ]
 
     response = random.choice(pig_facts)
