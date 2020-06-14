@@ -22,6 +22,15 @@ picture_urls = [
     "https://media.tenor.com/images/5c4ef70120fecd4387325afff3cfcf05/tenor.gif",
     "https://media.tenor.com/images/30f5f9b6c9763f8ea531c5965444270a/tenor.gif",
     "https://media.tenor.com/images/68be80c9492e3d0bb8d8b14c93a71027/tenor.gif",
+    "https://media.tenor.com/images/7d2f3ba98751945bd18fdae92952d4c6/tenor.gif",
+    "https://media.tenor.com/images/803b558223b478fffe387760c0295434/tenor.gif",
+    "https://media.tenor.com/images/76ca9a5f493f2dc5b154f7db32d4e43b/tenor.gif",
+    "https://media.tenor.com/images/40e600535ee2af50e7342e68252697da/tenor.gif",
+    "https://media.tenor.com/images/40e5e3d275081ccd7b2f4c9cb628e772/tenor.gif",
+    "https://media.tenor.com/images/0eea15e0431eb004420b555315c4091a/tenor.gif",
+    "https://media.tenor.com/images/cdf9f97895b5ee06ed450d318ab25124/tenor.gif",
+    "https://media.tenor.com/images/30f5f9b6c9763f8ea531c5965444270a/tenor.gif",
+    "https://media.tenor.com/images/a82a7145c8df2c767f821d0b88d6bdf2/tenor.gif",
 ]
 
 
