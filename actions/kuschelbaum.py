@@ -13,7 +13,7 @@ picture_urls = [
 
 async def execute(message):
     embed = discord.Embed()
-    embed.description = "Baum! Raschel! Baumel! Wui! :deciduous_tree: :heart:"
+    embed.description = "Baum! Raschel! Baumel! Wui! :deciduous_tree: :green_heart: "
     url = random.choice(picture_urls)
     embed.set_footer(text=url)
     embed.set_image(url=url)
