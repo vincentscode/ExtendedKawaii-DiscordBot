@@ -31,6 +31,7 @@ picture_urls = [
     "https://media.tenor.com/images/cdf9f97895b5ee06ed450d318ab25124/tenor.gif",
     "https://media.tenor.com/images/30f5f9b6c9763f8ea531c5965444270a/tenor.gif",
     "https://media.tenor.com/images/a82a7145c8df2c767f821d0b88d6bdf2/tenor.gif",
+    "https://cdn.discordapp.com/avatars/404431566031552512/b88420a6c6f5015ca6b2277f02787774.png?size=1024"
 ]
 
 
