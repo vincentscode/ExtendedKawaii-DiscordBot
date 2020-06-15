@@ -87,7 +87,9 @@ async def on_message(message: discord.Message):
                     cmd_append = " [Person]"
                 elif action.accepts_mention:
                     cmd_append = " [Optional: Person]"
-                embed.add_field(name='**' + ' / '.join(action.commands) + cmd_append + '**', value=action.description, inline=inline)
+                joined_commands = ' / '.join(action.commands)
+                joined_commands = (joined_commands[:50] + '..') if len(joined_commands) > 75 else joined_commands
+                embed.add_field(name='**' + joined_commands + cmd_append + '**', value=action.description, inline=inline)
                 itr += 1
                 if itr == 24:
                     page_itr += 1
