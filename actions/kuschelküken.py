@@ -31,6 +31,20 @@ picture_urls = [
     "https://media.tenor.com/images/cdf9f97895b5ee06ed450d318ab25124/tenor.gif",
     "https://media.tenor.com/images/30f5f9b6c9763f8ea531c5965444270a/tenor.gif",
     "https://media.tenor.com/images/a82a7145c8df2c767f821d0b88d6bdf2/tenor.gif",
+    "https://media.tenor.com/images/a24ec7fafd74950e7c7e15c1160eb339/tenor.gif",
+    "https://media.tenor.com/images/ea3fd4bf65e9ce7e093d6cc987e74970/tenor.gif",
+    "https://i.imgur.com/inxht6k.gif?noredirect",
+    "https://media.tenor.com/images/e1620124a080032f4d65fe3779181a74/tenor.gif",
+    "https://webstockreview.net/images/chick-clipart-animation-4.gif",
+    "https://oslo-production.s3.amazonaws.com/uploads/medium/asset/397/baby_chick.gif",
+    "https://i.imgur.com/nNF7aLD.gif",
+    "https://media.tenor.com/images/8649b4b882dc9d90cefd39d81c2c9b3f/tenor.gif",
+    "https://i.pinimg.com/originals/66/bb/8b/66bb8b898adf5c556fa3ae6b5bd5f038.gif",
+    "https://media.tenor.com/images/8781dfbe8790a40de137241e4d363d1f/tenor.gif",
+    "https://media.tenor.com/images/0db1f6d85f34976ad4937163a99366ba/tenor.gif",
+    "https://media.tenor.com/images/34875eed9f61677cecc5fbe53b3318b4/tenor.gif",
+    "https://media.tenor.com/images/02e36b1950f2d4af7c9b73de5e6d9037/tenor.gif",
+    "https://media.tenor.com/images/2d6c4778a4311a035152427163dc8443/tenor.gif",
 ]
 
 
