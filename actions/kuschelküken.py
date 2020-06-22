@@ -41,6 +41,11 @@ picture_urls = [
     "https://i.imgur.com/nNF7aLD.gif",
     "https://media.tenor.com/images/8649b4b882dc9d90cefd39d81c2c9b3f/tenor.gif",
     "https://i.pinimg.com/originals/66/bb/8b/66bb8b898adf5c556fa3ae6b5bd5f038.gif",
+    "https://media.tenor.com/images/8781dfbe8790a40de137241e4d363d1f/tenor.gif",
+    "https://media.tenor.com/images/0db1f6d85f34976ad4937163a99366ba/tenor.gif",
+    "https://media.tenor.com/images/34875eed9f61677cecc5fbe53b3318b4/tenor.gif",
+    "https://media.tenor.com/images/02e36b1950f2d4af7c9b73de5e6d9037/tenor.gif",
+    "https://media.tenor.com/images/2d6c4778a4311a035152427163dc8443/tenor.gif",
 ]
 
 
