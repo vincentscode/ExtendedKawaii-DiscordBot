@@ -2,7 +2,7 @@ import discord
 import random
 from helpers import get_gif
 
-commands = ["miau", "meow"]
+commands = ["miau", "meow", "mau"]
 requires_mention = False
 accepts_mention = True
 description = "=(^_^)="

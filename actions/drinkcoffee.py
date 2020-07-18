@@ -11,6 +11,6 @@ async def execute(message):
     gif = get_gif('coffee', lmt=25, pos=0)
 
     embed = discord.Embed()
-    embed.description = ':coffee:'
+    embed.description = '<:metalcoffee:707941148777512966>'
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)

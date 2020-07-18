@@ -6,7 +6,7 @@ import bs4
 commands = ["dstatus", "discord", "discordstatus"]
 requires_mention = False
 accepts_mention = False
-description = "Status von status.discordapp.com"
+description = "Status von status.discord.com"
 
 
 dc_headers = {
@@ -17,10 +17,10 @@ dc_headers = {
     'sec-fetch-dest': 'empty',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
     'dnt': '1',
-    'origin': 'https://status.discordapp.com',
+    'origin': 'https://status.discord.com',
     'sec-fetch-site': 'cross-site',
     'sec-fetch-mode': 'cors',
-    'referer': 'https://status.discordapp.com/',
+    'referer': 'https://status.discord.com/',
     'accept-language': 'en-DE,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6',
 }
 
@@ -65,37 +65,37 @@ tw_headers = {
 
 async def execute(message):
     e = discord.Embed()
-    e.set_thumbnail(url="https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png")
-    e.set_author(name="Discord Status", url="https://status.discordapp.com/")
+    e.set_thumbnail(url="https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png")
+    e.set_author(name="Discord Status", url="https://status.discord.com/")
 
-    response = requests.get('https://status.discordapp.com/api/v2/status.json', headers=dc_headers)
+    response = requests.get('https://status.discord.com/api/v2/status.json', headers=dc_headers)
     e.description = "Status: " + response.json()["status"]["description"]
 
     response = requests.get('https://discord.statuspage.io/metrics-display/ztt4777v23lf/day.json', headers=dc_headers)
     e.add_field(name="Letzter Ping", value=response.json()["summary"]["last"], inline=False)
     e.add_field(name="Durchschnittlicher Ping", value=str(int(response.json()["summary"]["mean"])) + "\n\n\n\n", inline=False)
 
-    response = requests.get('https://xn--allestrungen-9ib.de/stoerung/discord/', headers=as_headers)
-    rtxt = response.text.replace(" ", "").replace("\n", "").replace("\r", "")
+    #response = requests.get('https://xn--allestrungen-9ib.de/stoerung/discord/', headers=as_headers)
+    #rtxt = response.text.replace(" ", "").replace("\n", "").replace("\r", "")
 
-    idx1 = rtxt.index("<canvas id='holder'></canvas><script type='text/javascript'>// <![CDATA[".replace(" ", ""))
-    rtxt1 = rtxt[idx1:]
+    #idx1 = rtxt.index("<canvas id='holder'></canvas><script type='text/javascript'>// <![CDATA[".replace(" ", ""))
+    #rtxt1 = rtxt[idx1:]
 
-    idx2 = rtxt1.index("$(function(){")
-    rtxt2 = rtxt1[:idx2]
+    #idx2 = rtxt1.index("$(function(){")
+    #rtxt2 = rtxt1[:idx2]
 
-    idx3 = len("<canvasid='holder'></canvas><scripttype='text/javascript'>//<![CDATA[vardata=")
-    rtxt3 = rtxt2[idx3:].replace("'", "\"")
-    dec = demjson.decode(rtxt3)
+    #idx3 = len("<canvasid='holder'></canvas><scripttype='text/javascript'>//<![CDATA[vardata=")
+    #rtxt3 = rtxt2[idx3:].replace("'", "\"")
+    #dec = demjson.decode(rtxt3)
 
     status = {
-        "danger": ":white_check_mark: Keine Störung bei Discord",
+        "success": ":white_check_mark: Keine Störung bei Discord",
         "warning": ":warning: Möglicherweise Störung bei Discord",
-        "success": ":exclamation: Störung bei Discord",
+        "danger": ":exclamation: Störung bei Discord",
     }
-    e.add_field(name="allestörungen.de", value=status[dec["status"]], inline=False)
+    #e.add_field(name="allestörungen.de", value=status[dec["status"]], inline=False)
 
-    response = requests.get('https://mobile.twitter.com/discordapp', headers=tw_headers)
+    response = requests.get('https://mobile.twitter.com/discord', headers=tw_headers)
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
     # main_content > div.timeline > table:nth-child(2) > tbody > tr.tweet-container > td > div.tweet-text
     se = soup.find("td", {"class": "tweet-content"})

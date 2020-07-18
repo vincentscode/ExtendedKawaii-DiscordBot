@@ -12,7 +12,7 @@ async def execute(message):
         await message.channel.send("Mit wem denn? o.O\n(Bitte gib einen gültigen Nutzer an)")
         return
         
-    gif = get_gif('pillow fight')
+    gif = get_gif('pillow fight', wo_anime=True)
 
     embed = discord.Embed()
     if len(message.mentions) == 1:

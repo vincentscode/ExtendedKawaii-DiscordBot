@@ -1,7 +1,7 @@
 import discord
 from helpers import get_gif
 
-commands = ["catcuddle", "katzenkuschel"]
+commands = ["warmkuschel"]
 requires_mention = True
 accepts_mention = True
 description = "Kuscheln <:ishappy:441572301167656971>"
@@ -15,15 +15,15 @@ async def execute(message):
         await message.channel.send("Du kannst dich selbst umarmen, such dir zum kuscheln eine Decke - das funktioniert so nicht! <:trollface:496805278587551766>")
         return
 
-    gif = get_gif('cat cuddle', wo_anime=True)
+    gif = get_gif('cuddle')
 
     embed = discord.Embed()
     if len(message.mentions) == 1:
         # 1 mention
-        embed.description = f"{message.author.mention} kuschelt {message.mentions[0].mention}"
+        embed.description = f"{message.author.mention} kuschelt {message.mentions[0].mention} warm!"
     elif len(message.mentions) > 1:
         # > 1 mentions
-        embed.description = f"{message.author.mention} kuschelt {', '.join([x.mention for x in message.mentions[:-2]]) + ', ' if len(message.mentions[:-2]) > 0 else ''}{' & '.join([x.mention for x in message.mentions[-2:]])}"
+        embed.description = f"{message.author.mention} kuschelt {', '.join([x.mention for x in message.mentions[:-2]]) + ', ' if len(message.mentions[:-2]) > 0 else ''}{' & '.join([x.mention for x in message.mentions[-2:]])} warm!"
 
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)

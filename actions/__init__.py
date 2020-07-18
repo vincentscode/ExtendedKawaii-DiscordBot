@@ -14,10 +14,12 @@ for itm in sorted(os.listdir(dir_path)):
     if itm.startswith("__"):
         continue
     # print("Loading", itm)
-
-    spec = importlib.util.spec_from_file_location(itm, dir_path + "/" + itm)
-    loaded_module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(loaded_module)
-    actions.append(loaded_module)
-    for command in loaded_module.commands:
-        command_actions[command] = loaded_module
+    try:
+        spec = importlib.util.spec_from_file_location(itm, dir_path + "/" + itm)
+        loaded_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loaded_module)
+        actions.append(loaded_module)
+        for command in loaded_module.commands:
+            command_actions[command] = loaded_module
+    except Exception as e:
+        print("Exception on load of", itm, "->", e)

@@ -215,6 +215,7 @@ async def execute(message):
         except asyncio.TimeoutError:
             print("No Response (Timeout)")
             await message.channel.send("Keine Antwort - Cancelled.")
+            return
         else:
             print("Response: " + response_msg.content)
             if response_msg.content.lower() == 'cancel':

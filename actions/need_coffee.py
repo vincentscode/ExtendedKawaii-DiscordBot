@@ -11,7 +11,7 @@ async def execute(message):
     gif = get_gif('need coffee', wo_anime=True)
 
     embed = discord.Embed()
-    msg = '{} braucht Kaffee..! :coffee:'.format(message.author.mention)
+    msg = '{} braucht Kaffee..! <:metalcoffee:707941148777512966>'.format(message.author.mention)
     embed.description = msg
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)

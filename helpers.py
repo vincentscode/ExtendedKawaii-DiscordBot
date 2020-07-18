@@ -44,7 +44,7 @@ def print(*args, log_level=0, end="\n"):
 async def check_admin_permissions(message):
     member: discord.Member = message.guild.get_member(message.author.id)
 
-    if message.author._user.id not in config.admin_ids and not (member.guild_permissions.administrator or member.guild_permissions.manage_messages or member.guild_permissions.manage_roles):
+    if message.author._user.id not in config.admin_ids: # and not (member.guild_permissions.administrator or member.guild_permissions.manage_messages or member.guild_permissions.manage_roles):
         e = discord.Embed()
         e.title = '❗ Fehler'
         e.description = "Du hast nicht die erforderlichen Berechtigungen um diesen Befehl zu benutzen.\n" \
@@ -165,12 +165,15 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
                 gifs = gifs[:lmt]
             if last_gif in gifs:
                 gifs.remove(last_gif)
+                # print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in gifs", len(gifs))
+
                 print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in gifs", len(gifs))
             if len(gifs) == 0:
                 return None
+
             sel = random.choice(gifs)
             last_gif = sel
-            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel, "<-", gifs)
+            print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "Selected gif:", sel) #, "<-", gifs)
             return sel
         else:
             return None

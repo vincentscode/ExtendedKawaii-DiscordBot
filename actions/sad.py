@@ -3,7 +3,7 @@ import requests
 import shelve
 from helpers import get_gif, parse, dir_path
 
-commands = ["sad"]
+commands = ["sad", "qwq"]
 requires_mention = False
 accepts_mention = True
 description = ":("
