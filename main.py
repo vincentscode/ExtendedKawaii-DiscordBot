@@ -7,15 +7,12 @@ import actions.settings
 import actions.propose_command
 import discord
 import math
-import builtins
-from datetime import datetime
 
 if dev_mode:
     import importlib
 
 client = discord.Client()
 
-blocklist = ["193350207776358400"]
 
 @client.event
 async def on_guild_join(guild):
@@ -41,8 +38,6 @@ async def on_member_ban(guild, user):
 async def on_message(message: discord.Message):
     if message.author == client.user:
         return
-
-    builtins.print(f"[{Fore.WHITE}" + datetime.now().strftime('%H:%M:%S.%f') + f"{Fore.RESET}] " + "[" + f"{Fore.LIGHTGREEN_EX}INFO {Fore.RESET}" + "] " + f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] {message.author.name}:", message.content)
 
     if not message.content.startswith(prefix) or len(message.content) < 1:
         return
