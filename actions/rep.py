@@ -75,6 +75,8 @@ async def execute(message):
             embed.description = f":up:  |  {message.author.mention} hat {message.mentions[0].mention} einen Ansehenspunkt gegeben!"
             update_last_used(str(message.author.id))
             increment_user(str(message.mentions[0].id))
+        else:
+            embed.description = ":up:  |  Du kannst in morgen einen weiteren Ansehenspunkt vergeben."
         await message.channel.send(embed=embed)
     elif len(message.mentions) == 0:
         if check(str(message.author.id)):
