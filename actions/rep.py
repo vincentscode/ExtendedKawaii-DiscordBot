@@ -76,13 +76,13 @@ async def execute(message):
             update_last_used(str(message.author.id))
             increment_user(str(message.mentions[0].id))
         else:
-            embed.description = ":up:  |  Du kannst in morgen einen weiteren Ansehenspunkt vergeben."
+            embed.description = ":up:  |  Du kannst morgen einen weiteren Ansehenspunkt vergeben."
         await message.channel.send(embed=embed)
     elif len(message.mentions) == 0:
         if check(str(message.author.id)):
             embed.description = ":up:  |  Du kannst einen Ansehenspunkt vergeben!"
         else:
-            embed.description = ":up:  |  Du kannst in morgen einen weiteren Ansehenspunkt vergeben."
+            embed.description = ":up:  |  Du kannst morgen einen weiteren Ansehenspunkt vergeben."
 
         await message.channel.send(embed=embed)
     elif len(message.mentions) > 1:
