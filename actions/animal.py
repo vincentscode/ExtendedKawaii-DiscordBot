@@ -536,7 +536,6 @@ commands = [
     "shortfinmakoshark",
     "schnitzel",
     "shrew",
-    "shrimp",
     "siamesefightingfish",
     "siberiantiger",
     "silkworm",

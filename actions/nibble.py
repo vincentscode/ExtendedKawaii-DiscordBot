@@ -15,7 +15,7 @@ async def execute(message):
     gif = get_gif(random.choice(['nibble', 'cat nibble']), pos=0, lmt=20, wo_anime=True)
 
     embed = discord.Embed()
-    msg = '{}, du wurdest {} angeknabbert'.format(message.mentions[0].mention, message.author.mention)
+    msg = '{}, du wurdest von {} angeknabbert'.format(message.mentions[0].mention, message.author.mention)
     embed.description = msg
     embed.set_image(url=gif)
     await message.channel.send(embed=embed)
