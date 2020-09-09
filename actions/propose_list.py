@@ -29,7 +29,7 @@ async def execute(message):
         for user_cmd in user_cmds:
             itms.append([user_dir[0], user_cmd])
 
-    e.title = f"Angrefragte Befehle ({len(itms)})"
+    e.title = f"Angefragte Befehle ({len(itms)})"
     i = 0
     for itm in itms:
         i += 1
