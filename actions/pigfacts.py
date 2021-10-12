@@ -7,6 +7,7 @@ description = "Schweinchen Fakten!"
 
 
 async def execute(message):
+    e = discord.Embed()
     pig_facts = [
         "Schweine schwitzen gar nicht, sie haben nur wenige Schweißdrüsen auf der Nase. ",
         "Schweine sulen sich im Schlamm um sich vor Insekten und Sonne zu schützen. Sie sind genauso anfällig auf Sonnenbrand wie wir.",
@@ -40,4 +41,5 @@ async def execute(message):
     ]
 
     response = random.choice(pig_facts)
-    await message.channel.send(response)
+    e.description = response
+    await message.channel.send(embed=e)
