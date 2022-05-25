@@ -8,7 +8,7 @@ description = "Yoda :o"
 
 
 async def execute(message):
-    gif = get_gif('yoda')
+    gif = get_gif('yoda', wo_anime=True)
 
     embed = discord.Embed()
     embed.set_image(url=gif)

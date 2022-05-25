@@ -1,7 +1,7 @@
 import discord
 from helpers import get_gif
 
-commands = ["eat", "nomnom", "noms"]
+commands = ["eat", "nomnom", "noms", "nom"]
 requires_mention = False
 accepts_mention = True
 description = "Nom!"

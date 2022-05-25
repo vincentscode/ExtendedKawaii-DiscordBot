@@ -1,7 +1,7 @@
 import discord
 from helpers import get_gif
 
-commands = ["keks", "kekse", "cookies"]
+commands = ["keks", "kekse", "cookies", "cookie"]
 requires_mention = False
 accepts_mention = True
 description = ":cookie:"

@@ -13,8 +13,10 @@ import importlib.util
 from config import tenor_key, giphy_key
 
 last_gif = None
-platforms = platforms_with_local = ["discord"]
-
+platforms = platforms_with_local = ["tenor"]
+gif_blacklist = [
+    "https://media.tenor.com/images/a9c021d6e32d1de2c117e8cf0e4b5a57/tenor.gif",
+]
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(dir_path + '/logs'):
@@ -55,6 +57,21 @@ async def check_admin_permissions(message):
     else:
         return True
 
+def get_server_webhooks(server_id):
+    webhooks = {}
+    server_path = dir_path + "/server_webhooks/" + str(server_id)
+
+    if not os.path.exists(server_path):
+        os.mkdir(server_path)
+    for itm in sorted(os.listdir(server_path)):
+        if itm.startswith("__"):
+            continue
+        f = open(server_path + "/" + itm)
+        wh = [x for x in f.read().replace("\r", "").split("\n") if x.strip() != ""]
+        webhooks[itm.replace(".txt", "")] = wh
+        f.close()
+
+    return webhooks
 
 def get_server_actions(server_id):
     actions = []
@@ -163,6 +180,10 @@ def get_gif(search_term, lmt=10, pos=None, wo_anime=False, platform=None, check_
             gifs = [x["src"] for x in r.json()]
             if pos == 0 and lmt is not None:
                 gifs = gifs[:lmt]
+            for blocked_gif in gif_blacklist:
+                if blocked_gif in gifs:
+                    gifs.remove(blocked_gif)
+                    print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "blocked_gif in gifs", len(gifs), blocked_gif)
             if last_gif in gifs:
                 gifs.remove(last_gif)
                 # print(f"[{Fore.MAGENTA}{'System - Gif':20}{Fore.RESET}]", "last_gif in gifs", len(gifs))

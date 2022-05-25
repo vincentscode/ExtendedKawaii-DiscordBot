@@ -1,7 +1,7 @@
 import discord
 from helpers import get_gif
 
-commands = ["küss", "süß"]
+commands = ["küss", "süß", "kiss"]
 requires_mention = True
 accepts_mention = True
 description = "Jemanden küssen! (ɔˆ ³ˆ⋆):hearts:(◦’ںˉ◦)"

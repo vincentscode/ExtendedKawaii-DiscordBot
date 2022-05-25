@@ -1,7 +1,7 @@
 import discord
 from helpers import get_gif
 
-commands = ["kuschel", "knuddel", "kuschelt"]
+commands = ["kuschel", "kuscheln", "knuddel", "kuschelt", "cuddle", "kuschelwuschel"]
 requires_mention = True
 accepts_mention = True
 description = "Kuscheln <:ishappy:441572301167656971>"

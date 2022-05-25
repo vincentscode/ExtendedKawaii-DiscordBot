@@ -1,6 +1,7 @@
 from colorama import Fore
 from config import token, prefix, dev_mode
-from helpers import print, parse, get_server_actions
+import config
+from helpers import print, parse, get_server_actions, get_server_webhooks, dir_path
 import actions
 import actions.readme
 import actions.settings
@@ -9,13 +10,34 @@ import discord
 import math
 import builtins
 from datetime import datetime
+import time
+import asyncio
+import aiohttp
+import shelve
+from inspect import signature
 
+# dev mode
 if dev_mode:
     import importlib
 
-client = discord.Client()
+# client
+intents = discord.Intents.all()
+client = discord.Client(intents=intents)
 
-blocklist = ["193350207776358400"]
+# global client
+config.client = client
+
+user_blacklist = []
+server_blacklist = [435422365925507073]
+
+
+# join / leave
+join_leave_log = open(dir_path + "/join_leave_log.txt", "a", encoding="utf8")
+
+# insta previews
+import instaloader
+iloader = instaloader.Instaloader()
+iloader.load_session_from_file(config.ig_username)
 
 @client.event
 async def on_guild_join(guild):
@@ -31,6 +53,23 @@ async def on_guild_update(old_guild, new_guild):
 async def on_guild_remove(guild):
     print("Left guild", guild)
 
+@client.event
+async def on_member_join(member):
+    try:
+        print(f"[{Fore.LIGHTBLUE_EX}{member.guild.name:20}{Fore.RESET}]", member, "joined")
+        join_leave_log.write("\t".join([str(x) for x in [time.time(), member.guild.id, "join", member.id, member.guild.member_count]]) + "\n")
+        join_leave_log.flush()
+    except Exception as ex:
+        print("on_member_join:", ex)
+
+@client.event
+async def on_member_remove(member):
+    try:
+        print(f"[{Fore.LIGHTBLUE_EX}{member.guild.name:20}{Fore.RESET}]", member, "left")
+        join_leave_log.write("\t".join([str(x) for x in [time.time(), member.guild.id, "leave", member.id, member.guild.member_count]]) + "\n")
+        join_leave_log.flush()
+    except Exception as ex:
+        print("on_member_remove:", ex)
 
 @client.event
 async def on_member_ban(guild, user):
@@ -42,9 +81,110 @@ async def on_message(message: discord.Message):
     if message.author == client.user:
         return
 
+    server_webhooks = get_server_webhooks(message.guild.id)
+    # print("server_webhooks", server_webhooks)
+    wh_key = "on_message"
+    if wh_key in server_webhooks:
+        for wh_url in server_webhooks[wh_key]:
+            try:
+                print("starting req to wh", wh_url)
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=0.2)) as http_client:
+                    req = await http_client.get(wh_url)
+                    req.close()
+                    print("webhook called:", wh_url)
+            except Exception as ex:
+                print("request to webhook failed", wh_url, ex)
+
     builtins.print(f"[{Fore.WHITE}" + datetime.now().strftime('%H:%M:%S.%f') + f"{Fore.RESET}] " + "[" + f"{Fore.LIGHTGREEN_EX}INFO {Fore.RESET}" + "] " + f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] {message.author.name}:", message.content)
 
-    if not message.content.startswith(prefix) or len(message.content) < 1:
+    if len(message.content) < 1 and len(message.attachments) < 1:
+        return
+
+    # custom non-command hooks
+    if not message.content.startswith(prefix):
+        # instagram previews
+        ig_post_url_start = "https://www.instagram.com/p/"
+        ig_reel_url_start = "https://www.instagram.com/reel/"
+        ig_color = discord.Colour.from_rgb(224, 47, 106)
+        ig_icon = "https://instagram-brand.com/wp-content/uploads/2016/11/Instagram_AppIcon_Aug2017.png?w=300"
+        if ig_post_url_start in message.content or ig_reel_url_start in message.content:
+            msg = await message.channel.send("Generating Instagram Preview...")
+            if ig_post_url_start in message.content:
+                sIdx = message.content.index(ig_post_url_start)
+                fromS = message.content[sIdx+len(ig_post_url_start):]
+                eIdx = fromS.index("/")
+
+                if sIdx != 0 and message.content[sIdx-1] == "<":
+                    return
+
+                shortcode = fromS[:eIdx]
+            if ig_reel_url_start in message.content:
+                sIdx = message.content.index(ig_reel_url_start)
+                fromS = message.content[sIdx+len(ig_reel_url_start):]
+                eIdx = fromS.index("/")
+
+                if sIdx != 0 and message.content[sIdx-1] == "<":
+                    return
+
+                shortcode = fromS[:eIdx]
+
+            try:
+                post = instaloader.Post.from_shortcode(iloader.context, shortcode)
+            except Exception as ex:
+                await msg.edit(content="I failed :(")
+                await msg.delete()
+                return
+            print(post)
+            # print("mediacount", post.mediacount)
+            # print("caption", post.caption)
+            # print("url", post.url)
+            # print("owner", post.owner_profile.full_name, post.owner_profile.username)
+
+            title = f"{post.owner_profile.full_name} (@{post.owner_profile.username})"
+            desc = post.caption
+            if post.mediacount > 1:
+                desc += "\n\n``(Dieser Post hat mehrere Bilder und wird in Discord nicht vollständig angezeigt)``"
+            url = f"https://www.instagram.com/p/{shortcode}/"
+            ts = post.date_utc
+
+            e = discord.Embed(
+                # title=title,
+                # url=url,
+                description=desc,
+                timestamp=ts,
+                colour=ig_color
+            )
+            e.set_author(name=title, url=url, icon_url=post.owner_profile.profile_pic_url)
+            e.set_image(url=post.url)
+            e.set_footer(text="Instagram", icon_url=ig_icon)
+
+            await message.channel.send(embed=e)
+            await msg.delete()
+
+        return
+
+    if message.author.id in user_blacklist:
+        print("Blocked user", message.author)
+
+        title = "This user has been blacklisted."
+        content = "Bot commands from this user are ignored.\nPossible reasons are misuse or suspicious activities."
+        e = discord.Embed()
+        e.description = content
+        e.set_author(name=title)
+        e.set_footer(text="Feel free to contact Vincent#0212 to learn more.")
+        await message.channel.send(embed=e)
+        return
+
+    if message.guild.id in server_blacklist:
+        print("Blocked guild", message.guild)
+
+        title = "This guild has been blacklisted."
+        content = "Bot commands in this guild are ignored.\nPossible reasons are misuse, suspicious activities or general concerns."
+        e = discord.Embed()
+        e.description = content
+        e.set_author(name=title)
+        e.set_footer(text="Feel free to contact Vincent#0212 to learn more.")
+        await message.channel.send(embed=e)
         return
 
     command, channel, params, mentions, author = parse(message)
@@ -64,48 +204,66 @@ async def on_message(message: discord.Message):
                 return await self.original.send(content=content, tts=tts, embed=embed, file=file, files=files, delete_after=delete_after, nonce=nonce)
 
         message.channel = ChannelWrapper(message.channel)
-        await get_server_actions(channel.guild.id)[0][command].execute(message)
+        func = get_server_actions(channel.guild.id)[0][command].execute
+        if len(signature(func).parameters) == 2:
+            await func(message, client)
+        else:
+            await func(message)
 
     elif command in actions.command_actions.keys():
         print(f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] Executing {command} {author.name}#{author.discriminator}: \"{message.content}\"")
 
         if command in actions.readme.commands:
-            print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Sending readme ({len(actions.actions)} actions)")
-            inline = True
-            if len(params) != 0:
-                if params[0] == '0' or params[0] == 'short':
-                    inline = True
-                elif params[0] == '1' or params[0] == 'long':
-                    inline = False
+            if True:
+                dm_channel = await author.create_dm()
 
-            embed = discord.Embed()
-            embed.title = f"Liste der Befehle 1/{math.ceil(len(actions.actions) / 24)}"
-            embed.description = 'Prefix: ' + prefix
-            itr = 0
-            page_itr = 1
-            for action in actions.actions:
-                cmd_append = ""
-                if 'readme' in action.commands:
-                    cmd_append = " [Optional: Stil 0 (Default) / 1]"
-                elif action.requires_mention:
-                    cmd_append = " [Person]"
-                elif action.accepts_mention:
-                    cmd_append = " [Optional: Person]"
-                joined_commands = ' / '.join(action.commands)
-                joined_commands = (joined_commands[:50] + '..') if len(joined_commands) > 75 else joined_commands
-                embed.add_field(name='**' + joined_commands + cmd_append + '**', value=action.description, inline=inline)
-                itr += 1
-                if itr == 24:
-                    page_itr += 1
+                all_relevant_actions = []
+                for action in actions.actions:
+                    all_relevant_actions.append(action)
+                for action in get_server_actions(channel.guild.id)[0].values():
+                    all_relevant_actions.append(action)
+
+                all_relevant_actions = list(set(all_relevant_actions))
+
+                print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Sending PRIVATE readme ({len(all_relevant_actions)} actions)")
+                inline = True
+                if len(params) != 0:
+                    if params[0] == '0' or params[0] == 'short':
+                        inline = True
+                    elif params[0] == '1' or params[0] == 'long':
+                        inline = False
+
+                embed = discord.Embed()
+                embed.title = f"Liste der Befehle 1/{math.ceil(len(all_relevant_actions) / 24)}"
+                embed.description = 'Prefix: ' + prefix
+                itr = 0
+                page_itr = 1
+                for action in all_relevant_actions:
+                    cmd_append = ""
+                    if 'readme' in action.commands:
+                        cmd_append = " [Optional: Stil 0 (Default) / 1]"
+                    elif action.requires_mention:
+                        cmd_append = " [Person]"
+                    elif action.accepts_mention:
+                        cmd_append = " [Optional: Person]"
+                    joined_commands = ' / '.join(action.commands)
+                    joined_commands = (joined_commands[:50] + '..') if len(joined_commands) > 75 else joined_commands
+                    embed.add_field(name='**' + joined_commands + cmd_append + '**', value=action.description, inline=inline)
+                    itr += 1
+                    if itr == 24:
+                        page_itr += 1
+                        print(f"Sending \"{embed.title}\"")
+                        await dm_channel.send(embed=embed)
+                        embed = discord.Embed()
+                        embed.title = f"Liste der Befehle {page_itr}/{math.ceil(len(all_relevant_actions) / 24)}"
+                        embed.description = 'Prefix: ' + prefix
+                        itr = 0
+
+                if len(embed.fields) != 0:
                     print(f"Sending \"{embed.title}\"")
-                    await channel.send(embed=embed)
-                    embed = discord.Embed()
-                    embed.title = f"Liste der Befehle {page_itr}/{math.ceil(len(actions.actions) / 24)}"
-                    embed.description = 'Prefix: ' + prefix
-                    itr = 0
-            if len(embed.fields) != 0:
-                print(f"Sending \"{embed.title}\"")
-                await channel.send(embed=embed)
+                    await dm_channel.send(embed=embed)
+                
+                await channel.send("Ich habe dir die Hilfe via PM gesendet. Es sind X Seiten, dauert also nen Moment. owo")
 
         elif command in actions.settings.commands:
             print("Sending settings:", params)
@@ -154,6 +312,55 @@ async def on_ready():
     print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Id:", client.user.id)
     print(f"[{Fore.MAGENTA}{'System':20}{Fore.RESET}] Current guilds (max 25):", [x["name"] for x in await client.fetch_guilds().get_guilds(25)])
 
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='+help'))
+    asyncio.create_task(change_rainbow_role_every_nh())
 
+    # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='+help'))
+
+async def change_rainbow_role():
+    global client
+
+    rainbow_servers = [923241820073386024]
+    rainbow_role_name = "✨ 🌈"
+
+    print("ROLE COLOR CHANGE")
+    for rainbow_server_id in rainbow_servers:
+        guild = client.get_guild(rainbow_server_id)
+        for role in guild.roles:
+            if role.name == rainbow_role_name:
+                await role.edit(colour=discord.Colour.random())
+                break
+
+async def change_rainbow_role_lena():
+    global client
+
+    rainbow_servers = [923241820073386024]
+    rainbow_role_name = "✨ 🌈 Hibbelblob"
+
+    print("ROLE COLOR CHANGE LENA")
+    for rainbow_server_id in rainbow_servers:
+        guild = client.get_guild(rainbow_server_id)
+        for role in guild.roles:
+            if role.name == rainbow_role_name:
+                await role.edit(colour=discord.Colour.random())
+                break
+
+
+
+# rainbow role
+async def change_rainbow_role_every_nh():
+    while True:
+        # rainbow role
+        await change_rainbow_role()
+
+        # sleep 30m
+        await asyncio.sleep(60 * 30)
+
+        # lena role        
+        await change_rainbow_role_lena()
+
+        # sleep 30m
+        await asyncio.sleep(60 * 30)
+
+config.change_rainbow_role = change_rainbow_role
+config.change_rainbow_role_lena = change_rainbow_role_lena
 client.run(token)

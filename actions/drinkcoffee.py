@@ -1,7 +1,7 @@
 import discord
 from helpers import get_gif
 
-commands = ["drinkcoffee"]
+commands = ["drinkcoffee", "coffee"]
 requires_mention = False
 accepts_mention = False
 description = "KAFFEE!!! :coffee:"

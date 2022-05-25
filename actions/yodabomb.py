@@ -13,7 +13,7 @@ async def execute(message):
     num = 3
 
     while len(gifs) < num:
-        gifs.append(get_gif('yoda'))
+        gifs.append(get_gif('yoda', wo_anime=True))
         gifs = list(set(gifs))
 
     msg: discord.Message = await message.channel.send('Yoda-Bomb - Detonating in 3...')

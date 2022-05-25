@@ -7,6 +7,8 @@ from helpers import get_gif, parse, check_admin_permissions
 commands = [
     "animal",
     "list",
+    "cat",
+    "dog",
     "aardvark",
     "aardwolf",
     "africanbuffalo",

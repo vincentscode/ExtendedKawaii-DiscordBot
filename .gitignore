@@ -1,5 +1,28 @@
+# Custom
+## Directories
+/assets/
+/logs/
+/cache/
+/server_actions/
+/server_proposed_actions/
+/server_webhooks/
+/messages_per_day_cache/
+
+## Tests
+test*.py
+graph-create.py
+userradius.py
+bounce.py
+
+## Secrets
 config.py
-test2.py
+
+## Generated Content
+*.config.*
+*.db3
+join_leave_log.txt
+*.png
+
 # Created by https://www.gitignore.io/api/python,pycharm,pycharm+iml,pycharm+all
 # Edit at https://www.gitignore.io/?templates=python,pycharm,pycharm+iml,pycharm+all
 
@@ -302,12 +325,3 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/python,pycharm,pycharm+iml,pycharm+all
 /.idea/
-
-/assets/
-/logs/
-/cache/
-/server_actions/
-/server_proposed_actions/
-
-test.py
-*.config.*

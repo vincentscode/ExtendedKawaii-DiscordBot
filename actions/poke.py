@@ -1,14 +1,14 @@
 import discord
 from helpers import get_gif
 
-commands = ["anstups", "stups", "pieks"]
+commands = ["anstups", "stups", "pieks", "poke"]
 requires_mention = False
 accepts_mention = True
 description = "poke, poke, poke"
 
 
 async def execute(message):
-    gif = get_gif('poke')
+    gif = get_gif('poke', wo_anime=True)
 
     embed = discord.Embed()
     if len(message.mentions) == 1:

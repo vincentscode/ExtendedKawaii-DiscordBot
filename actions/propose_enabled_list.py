@@ -34,6 +34,9 @@ async def execute(message):
         i += 1
         if i < 25:
             e.add_field(name=itm[0], value=itm[1][:-3], inline=False)
+        else:
+            await message.channel.send("list may be incomplete - too many enabled commands.\nuse `+help` to see all commands")
+            break
     e.description = "Befehle können von berechtigten Nutzern mit\n``+disablecmd [username]#[0000] [command_name]``\nwieder deaktiviert werden."
 
     await message.channel.send(embed=e)
