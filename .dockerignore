@@ -1,0 +1,30 @@
+# Stuff
+__pycache__
+.idea
+.git
+venv
+
+# Custom
+## Directories
+/assets/
+/logs/
+/cache/
+/server_actions/
+/server_proposed_actions/
+/server_webhooks/
+/messages_per_day_cache/
+
+## Tests
+test*.py
+graph-create.py
+userradius.py
+bounce.py
+
+## Secrets
+config.py
+
+## Generated Content
+*.config.*
+*.db3
+join_leave_log.txt
+*.png

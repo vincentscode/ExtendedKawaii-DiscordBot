@@ -37,7 +37,7 @@ join_leave_log = open(dir_path + "/join_leave_log.txt", "a", encoding="utf8")
 # insta previews
 import instaloader
 iloader = instaloader.Instaloader()
-iloader.load_session_from_file(config.ig_username)
+# iloader.load_session_from_file(config.ig_username)
 
 @client.event
 async def on_guild_join(guild):
