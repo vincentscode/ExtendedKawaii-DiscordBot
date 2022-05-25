@@ -4,11 +4,11 @@ FROM python:3.7-slim
 
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y jpeg-dev zlib-dev libjpeg make curl gcc g++ libssl-dev libcurl4-openssl-dev
+RUN apt-get update && apt-get install -y make curl gcc g++ libssl-dev libcurl4-openssl-dev
 
 COPY requirements.txt requirements.txt
 RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+RUN python3 -m pip install --only-binary matplotlib --no-cache-dir -r requirements.txt
 
 COPY . .
 
