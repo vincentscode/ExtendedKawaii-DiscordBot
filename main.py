@@ -100,69 +100,6 @@ async def on_message(message: discord.Message):
     if len(message.content) < 1 and len(message.attachments) < 1:
         return
 
-    # custom non-command hooks
-    if not message.content.startswith(prefix):
-        # instagram previews
-        ig_post_url_start = "https://www.instagram.com/p/"
-        ig_reel_url_start = "https://www.instagram.com/reel/"
-        ig_color = discord.Colour.from_rgb(224, 47, 106)
-        ig_icon = "https://instagram-brand.com/wp-content/uploads/2016/11/Instagram_AppIcon_Aug2017.png?w=300"
-        if ig_post_url_start in message.content or ig_reel_url_start in message.content:
-            msg = await message.channel.send("Generating Instagram Preview...")
-            if ig_post_url_start in message.content:
-                sIdx = message.content.index(ig_post_url_start)
-                fromS = message.content[sIdx+len(ig_post_url_start):]
-                eIdx = fromS.index("/")
-
-                if sIdx != 0 and message.content[sIdx-1] == "<":
-                    return
-
-                shortcode = fromS[:eIdx]
-            if ig_reel_url_start in message.content:
-                sIdx = message.content.index(ig_reel_url_start)
-                fromS = message.content[sIdx+len(ig_reel_url_start):]
-                eIdx = fromS.index("/")
-
-                if sIdx != 0 and message.content[sIdx-1] == "<":
-                    return
-
-                shortcode = fromS[:eIdx]
-
-            try:
-                post = instaloader.Post.from_shortcode(iloader.context, shortcode)
-            except Exception as ex:
-                await msg.edit(content="I failed :(")
-                await msg.delete()
-                return
-            print(post)
-            # print("mediacount", post.mediacount)
-            # print("caption", post.caption)
-            # print("url", post.url)
-            # print("owner", post.owner_profile.full_name, post.owner_profile.username)
-
-            title = f"{post.owner_profile.full_name} (@{post.owner_profile.username})"
-            desc = post.caption
-            if post.mediacount > 1:
-                desc += "\n\n``(Dieser Post hat mehrere Bilder und wird in Discord nicht vollständig angezeigt)``"
-            url = f"https://www.instagram.com/p/{shortcode}/"
-            ts = post.date_utc
-
-            e = discord.Embed(
-                # title=title,
-                # url=url,
-                description=desc,
-                timestamp=ts,
-                colour=ig_color
-            )
-            e.set_author(name=title, url=url, icon_url=post.owner_profile.profile_pic_url)
-            e.set_image(url=post.url)
-            e.set_footer(text="Instagram", icon_url=ig_icon)
-
-            await message.channel.send(embed=e)
-            await msg.delete()
-
-        return
-
     if message.author.id in user_blacklist:
         print("Blocked user", message.author)
 
