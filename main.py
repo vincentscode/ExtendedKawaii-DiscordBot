@@ -128,6 +128,9 @@ async def on_message(message: discord.Message):
     if dev_mode:
         importlib.reload(actions)
 
+    if not message.content.startswith(prefix):
+        return
+
     if command in get_server_actions(channel.guild.id)[0].keys():
         print(f"[{Fore.LIGHTBLUE_EX}{message.guild.name:20}{Fore.RESET}] Executing Server Command {command} {author.name}#{author.discriminator}: \"{message.content}\"")
 
