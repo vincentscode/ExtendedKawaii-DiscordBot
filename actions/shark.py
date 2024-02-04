@@ -1,5 +1,6 @@
 import discord
 import requests
+import re
 from helpers import parse, print
 
 commands = ["shark", "hai", "blahaj"]
@@ -41,7 +42,7 @@ def get_shark() -> SharkPost:
     j = r.json()
 
     author = j["author"]
-    description = j["description"]
+    description = re.findall('\\"(.+)\\" \(.*\)', j["description"])[0]
     url = j["url"]
 
     return SharkPost(author, description, url)
