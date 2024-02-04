@@ -2,7 +2,7 @@ import discord
 import requests
 from helpers import parse, print
 
-commands = ["shark, hai"]
+commands = ["shark", "hai", "blahaj"]
 requires_mention = False
 accepts_mention = False
 description = "1 shark"
