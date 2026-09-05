@@ -26,7 +26,7 @@ async def execute(message: discord.Message):
     await msg.edit(content="Goat-Bomb - :boom:")
 
     for gif in gifs:
-        file = discord.File(dir_path + "/assets/goats/" + gif, filename=gif)
+        file = discord.File(dir_path + "/data/assets/goats/" + gif, filename=gif)
         embed = discord.Embed()
         embed.set_image(url="attachment://" + gif)
         await message.channel.send(file=file, embed=embed)

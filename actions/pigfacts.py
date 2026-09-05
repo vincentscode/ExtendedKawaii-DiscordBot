@@ -1,4 +1,5 @@
 import random
+import discord
 
 commands = ["pigfact", "pigfacts"]
 requires_mention = False
@@ -7,6 +8,7 @@ description = "Schweinchen Fakten!"
 
 
 async def execute(message):
+    print(message)
     e = discord.Embed()
     pig_facts = [
         "Schweine schwitzen gar nicht, sie haben nur wenige Schweißdrüsen auf der Nase. ",
@@ -37,7 +39,6 @@ async def execute(message):
         "Schweine können sich gegenseitig austricken. So folgen sie gerne ihren Artgenossen, wenn diese auf der Suche nach Nahrung sind, und schnappen ihnen diese dann vor der Nase weg. Diejenigen, die überlistet werden, lernen jedoch, ihr Verhalten zu ändern, damit sie nicht mehr so häufig das Nachsehen haben.",
         "Schweine fühlen wie wir Schmerz, Leid, Freude und Trauer. Sie können auch Mitgefühl mit anderen Schweinen haben, die leiden.",
         "Das Kunekune Schwein ist sehr flauschig. Google es! Los! Überzeuge dich von der Flauschigkeit!",
-        
     ]
 
     response = random.choice(pig_facts)

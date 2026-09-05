@@ -1,10 +1,8 @@
-# syntax=docker/dockerfile:1
-
-FROM python:3.7-slim
+FROM python:3.14-slim
 
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y make curl gcc g++ libssl-dev libcurl4-openssl-dev
+RUN apt-get update && apt-get install -y make curl gcc g++ libssl-dev libcurl4-openssl-dev graphviz graphviz-dev
 
 COPY requirements.txt requirements.txt
 RUN python3 -m pip install --upgrade pip

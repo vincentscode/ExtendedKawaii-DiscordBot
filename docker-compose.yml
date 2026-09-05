@@ -1,0 +1,8 @@
+services:
+  extended-kawaii-bot:
+    image: ghcr.io/vincentscode/extendedkawaiibot:latest
+    volumes:
+     - ./data/
+    restart: always
+    dns:
+     - '8.8.8.8'

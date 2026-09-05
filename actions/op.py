@@ -1,6 +1,5 @@
 import discord
-import config
-from helpers import get_gif
+import data.config as config
 
 commands = ["op"]
 requires_mention = False
@@ -9,8 +8,6 @@ description = "op"
 
 
 async def execute(message):
-    # discord.Member = message.guild.get_member(message.author.id)
-
     e = discord.Embed()
     e.title = 'Liste der authorisierten User'
 

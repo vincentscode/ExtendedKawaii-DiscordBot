@@ -1,18 +1,10 @@
-# Stuff
-__pycache__
-.idea
-.git
-venv
-
-# Custom
 ## Directories
-/assets/
-/logs/
-/cache/
-/server_actions/
-/server_proposed_actions/
-/server_webhooks/
-/messages_per_day_cache/
+/data/
+/venv/
+/.venv/
+/__pycache__/
+/.idea/
+/.git/
 
 ## Tests
 test*.py

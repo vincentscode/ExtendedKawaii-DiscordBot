@@ -4,7 +4,7 @@ from helpers import get_gif, parse
 commands = ["catcuddle", "katzenkuschel"]
 requires_mention = True
 accepts_mention = True
-description = "Kuscheln <:ishappy:441572301167656971>"
+description = "Kuscheln!"
 
 
 async def execute(message):

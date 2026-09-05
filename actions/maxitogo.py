@@ -1,4 +1,4 @@
-import config
+import data.config as config
 import discord
 import random
 from helpers import get_gif, get_maxi, dir_path, parse
@@ -31,7 +31,7 @@ async def execute(message):
     if command == "maxitogo+" or command == "maxitogospecial" or not random.choice([True, True, True, True, True, False]):
         embed.description = "MaxiToGo Spezial wird geliefert!"
         img = get_maxi()
-        file = discord.File(dir_path + "/assets/maxitogo/" + img, filename=img)
+        file = discord.File(dir_path + "/data/assets/maxitogo/" + img, filename=img)
         embed.set_image(url="attachment://" + img)
         await message.channel.send(file=file, embed=embed)
 
